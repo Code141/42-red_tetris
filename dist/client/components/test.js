@@ -1,96 +1,71 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _react = require('react');
+var _react = _interopRequireDefault(require("react"));
 
-var _react2 = _interopRequireDefault(_react);
+var _reactRedux = require("react-redux");
 
-var _reactRedux = require('react-redux');
-
-var _game = require('../actions/game');
+var _game = require("../actions/game");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Board = function Board(_ref) {
-  var game = _ref.game,
-      clickOnCell = _ref.clickOnCell;
+const Board = ({
+  game,
+  clickOnCell
+}) => /*#__PURE__*/_react.default.createElement("div", {
+  className: "board"
+}, game.map((line, index) => /*#__PURE__*/_react.default.createElement(Line, {
+  callback: clickOnCell,
+  cells: line,
+  key: index,
+  y: index
+})));
 
-  return _react2.default.createElement(
-    'div',
-    { className: 'board' },
-    game.map(function (line, index) {
-      return _react2.default.createElement(Line, {
-        key: index,
-        cells: line,
-        y: index,
-        callback: clickOnCell
-      });
-    })
-  );
-};
-var Cell2 = function Cell2(_ref2) {
-  var game = _ref2.game;
+const Cell2 = ({
+  game
+}) => /*#__PURE__*/_react.default.createElement("div", null, game);
 
-  return _react2.default.createElement(
-    'div',
-    null,
-    game
-  );
-};
+const Line = ({
+  cells,
+  y,
+  callback
+}) => /*#__PURE__*/_react.default.createElement("ul", {
+  className: "line"
+}, cells.map((cell, index) => /*#__PURE__*/_react.default.createElement(Cell, {
+  callback: callback,
+  cell: cell,
+  key: index,
+  x: index,
+  y: y
+})));
 
-var Line = function Line(_ref3) {
-  var cells = _ref3.cells,
-      y = _ref3.y,
-      callback = _ref3.callback;
+const Cell = ({
+  cell,
+  x,
+  y,
+  callback
+}) => /*#__PURE__*/_react.default.createElement("li", {
+  className: "cell",
+  onClick: () => {
+    callback({
+      x,
+      y
+    });
+  }
+}, cell);
 
+const mapStateToProps = state => ({
+  game: state.game
+});
 
-  return _react2.default.createElement(
-    'ul',
-    { className: 'line' },
-    cells.map(function (cell, index) {
-      return _react2.default.createElement(Cell, {
-        key: index,
-        cell: cell,
-        x: index,
-        y: y,
-        callback: callback
-      });
-    })
-  );
-};
-var Cell = function Cell(_ref4) {
-  var cell = _ref4.cell,
-      x = _ref4.x,
-      y = _ref4.y,
-      callback = _ref4.callback;
+const mapDispatchToProps = (dispatch, payload) => ({
+  clickOnCell: cell => dispatch((0, _game.gameAction)(cell))
+});
 
-  return _react2.default.createElement(
-    'li',
-    {
-      className: 'cell',
-      onClick: function onClick() {
-        callback({ x: x, y: y });
-      }
-    },
-    cell
-  );
-};
+var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Board);
 
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    game: state.game
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch, payload) {
-  return {
-    clickOnCell: function clickOnCell(cell) {
-      return dispatch((0, _game.gameAction)(cell));
-    }
-  };
-};
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Board);
+exports.default = _default;

@@ -1,10 +1,8 @@
-import crypto from 'crypto';
+import crypto from 'crypto'
 import Player from './player'
 import {
-  checkMove,
   moveDown,
   checkLines,
-  hardDrop,
   mergePieceInBuffer,
 } from './rules'
 
@@ -64,7 +62,6 @@ class Game {
         player.socket.send(tick, player.buffer);
       }
       else {
-
         // piece.position.y -= 1;
       }
     });
@@ -88,9 +85,9 @@ class Game {
     return Buffer.concat(buffersToSend, totalLength);
   }
 
-  addPlayer(socket) {
-    this.players.push(new Player(socket, '#OASDLIKFJ', 'jean'));
-    socket.join(this.id);
+  addPlayer(player) {
+    this.players.push(player);
+    player.socket.join(this.id);
   }
 
   removePlayer(socket) {

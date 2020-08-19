@@ -9,45 +9,43 @@ import { connect } from 'react-redux'
 import Board from '../components/test'
 import Form from '../components/form'
 
-const App = ({ message }) => {
-  return (
-    <div className='wrap'>
-      <Router>
+const App = ({ message }) => (
+  <div className='wrap'>
+    <Router>
 
-          <nav>
-            <ul>
+      <nav>
+        <ul>
 
-              <li>
-                <Link to='/'>
+          <li>
+            <Link to='/'>
                   Home
-                </Link>
-              </li>
+            </Link>
+          </li>
 
-              <li>
-                <Link to='/game'>
+          <li>
+            <Link to='/game'>
                   Game
-                </Link>
-              </li>
+            </Link>
+          </li>
 
-            </ul>
-          </nav>
+        </ul>
+      </nav>
+      <hr/>
+      <Switch>
 
-          <Switch>
+        <Route path='/game'>
+          <Board />
+        </Route>
 
-            <Route path='/game'>
-              <Board />
-            </Route>
+        <Route path='/'>
+          <Form />
+        </Route>
 
-            <Route path='/'>
-              <Form />
-            </Route>
+      </Switch>
 
-          </Switch>
+    </Router>
 
-      </Router>
-
-    </div>
-  )
-}
+  </div>
+)
 
 export default App;

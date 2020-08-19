@@ -1,8 +1,8 @@
-import crypto from 'crypto';
-const EventEmitter = require('events');
+import crypto from 'crypto'
+import { checkMove } from './rules'
+import EventEmitter from 'events'
 
-class Player extends EventEmitter
-{
+class Player extends EventEmitter {
   constructor(socket, pseudo) {
     super();
     this.id = crypto.randomBytes(20).toString('hex');
@@ -17,16 +17,18 @@ class Player extends EventEmitter
     this.socket.on(
       'reciveAction',
       (data) => {
-        if (checkMove(this.buffer, data.action, this.pieces[0]))
+        if (checkMove(this.buffer, data.action, this.pieces[0])) {
           this.emit('action_valid', data.action)
-        else
+        }
+        else {
           this.socket.send(
             'action_invalid',
             {
               action: data.action,
-              status: invalid,
+              status: 'invalid',
             }
           )
+        }
       }
     );
   }

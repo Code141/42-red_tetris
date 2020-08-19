@@ -1,47 +1,25 @@
-'use strict';
+"use strict";
 
-var _react = require('react');
+var _react = _interopRequireDefault(require("react"));
 
-var _react2 = _interopRequireDefault(_react);
+var _reactDom = _interopRequireDefault(require("react-dom"));
 
-var _reactDom = require('react-dom');
+var _redux = require("redux");
 
-var _reactDom2 = _interopRequireDefault(_reactDom);
+var _reactRedux = require("react-redux");
 
-var _reduxLogger = require('redux-logger');
+var _reducers = _interopRequireDefault(require("./reducers"));
 
-var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+var _app = _interopRequireDefault(require("./containers/app"));
 
-var _reduxThunk = require('redux-thunk');
-
-var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-var _redux = require('redux');
-
-var _reactRedux = require('react-redux');
-
-var _storeStateMiddleWare = require('./middleware/storeStateMiddleWare');
-
-var _reducers = require('./reducers');
-
-var _reducers2 = _interopRequireDefault(_reducers);
-
-var _app = require('./containers/app');
-
-var _app2 = _interopRequireDefault(_app);
-
-var _alert = require('./actions/alert');
+var _socket = _interopRequireDefault(require("./middleware/socket"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var initialState = {};
+const socket = (0, _socket.default)('localhost:3004');
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || _redux.compose;
+const store = (0, _redux.createStore)(_reducers.default, composeEnhancer((0, _redux.applyMiddleware)(socket)));
 
-var store = (0, _redux.createStore)(_reducers2.default, initialState, (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)()));
-
-_reactDom2.default.render(_react2.default.createElement(
-  _reactRedux.Provider,
-  { store: store },
-  _react2.default.createElement(_app2.default, null)
-), document.getElementById('tetris'));
-
-store.dispatch((0, _alert.alert)('CLICK ON CELL'));
+_reactDom.default.render( /*#__PURE__*/_react.default.createElement(_reactRedux.Provider, {
+  store: store
+}, /*#__PURE__*/_react.default.createElement(_app.default, null)), document.getElementById('tetris'));

@@ -1,24 +1,21 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _redux = require('redux');
+var _redux = require("redux");
 
-var _game = require('./game');
+var _user = _interopRequireDefault(require("./user"));
 
-var _game2 = _interopRequireDefault(_game);
-
-var _alert = require('./alert');
-
-var _alert2 = _interopRequireDefault(_alert);
+var _game = _interopRequireDefault(require("./game"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var rootReducer = (0, _redux.combineReducers)({
-  game: _game2.default,
-  alert: _alert2.default
+const rootReducer = (0, _redux.combineReducers)({
+  user: _user.default,
+  game: _game.default
 });
-
-exports.default = rootReducer;
+var _default = rootReducer;
+exports.default = _default;

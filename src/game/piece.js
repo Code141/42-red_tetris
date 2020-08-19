@@ -1,13 +1,13 @@
-class piece
-{
+class Piece {
   constructor(piece) {
     this.position.x = 0;
     this.position.y = 0;
     this.buffPiece = new bufferFrom(piece)
   }
 
-  turnRight()
-  {
+  turnRight() {
   }
 
 }
+
+export default Piece;
