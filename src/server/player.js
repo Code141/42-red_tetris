@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import { checkMove } from './rules'
+import { checkMove } from '../game/rules'
 import EventEmitter from 'events'
 
 class Player extends EventEmitter {

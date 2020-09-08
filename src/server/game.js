@@ -4,7 +4,7 @@ import {
   moveDown,
   checkLines,
   mergePieceInBuffer,
-} from './rules'
+} from '../game/rules'
 
 class Game {
   constructor(opts) {
@@ -29,7 +29,7 @@ class Game {
     this.players.forEach((player) => {
       player.resetForNextMatch(this.gameRules);
       player.on('action_valid', (action) => {
-        this.broadcast_in_room('action', action)
+        this.broadcast('action', action)
       });
     });
     this.loop = setInterval(() => { this.nextTick() }, this.tickDuration);
@@ -40,14 +40,23 @@ class Game {
     this.loop = undefined;
   }
 
+  // if (this.players.length === 0) => lunch this.closeGame()
+  closeGame() {
+    // broadcast players and spectators "good by"
+    // (emit to top level => free me)
+  }
+
   nextMatch() {
     this.stopGame();
     this.startGame();
   }
 
-  broadcast_in_room(actionName, payload) {
+  broadcast(actionName, payload) {
     this.players.forEach((player, index) => {
       player.socket.emit('action', payload);
+      spectators.socket.emit('action', payload);
+
+      // this.room.broadcast(payload)
     });
   }
 
@@ -66,7 +75,7 @@ class Game {
       }
     });
 
-    this.broadcast_in_room('action',
+    this.broadcast('action',
       {
         type: 'NEXT_TICK',
         payload: this.concatAllBuffers(),

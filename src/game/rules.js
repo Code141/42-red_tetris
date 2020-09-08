@@ -1,15 +1,20 @@
-export function checkMove(buffer) {
+/* move */
 
-}
-
-export function moveDown(buffer) {
+export function moveDown(buffer, piece) {
   let pieceHasLanded = false
   pieceHasLanded = true;
   return pieceHasLanded;
 }
 
-export function checkLines(buffer) {
-  return buffer;
+export function hardDrop(piece, buffer) {
+  if (moveDown(piece, buffer)) { hardDrop(piece, buffer); }
+  else { mergePieceInBuffer(piece, buffer); }
+}
+
+/* */
+
+export function checkMove(buffer, piece) {
+
 }
 
 export function mergePieceInBuffer(piece, buffer) {
@@ -17,9 +22,6 @@ export function mergePieceInBuffer(piece, buffer) {
   return newBuffer;
 }
 
-export function hardDrop(piece, buffer) {
-  if (moveDown(piece, buffer))
-    hardDrop(piece, buffer);
-  else
-    mergePieceInBuffer(piece, buffer);
+export function checkLines(buffer) {
+  return buffer;
 }

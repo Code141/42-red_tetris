@@ -8,6 +8,7 @@ import {
 import { connect } from 'react-redux'
 import Board from '../components/test'
 import Form from '../components/form'
+import RoomList from '../components/roomList'
 
 const App = ({ message }) => (
   <div className='wrap'>
@@ -15,30 +16,33 @@ const App = ({ message }) => (
 
       <nav>
         <ul>
-
           <li>
             <Link to='/'>
                   Home
             </Link>
           </li>
-
           <li>
             <Link to='/game'>
                   Game
             </Link>
           </li>
-
         </ul>
       </nav>
+
       <hr/>
+
       <Switch>
 
         <Route path='/game'>
+          <button>
+            LEAVE_ROOM
+          </button>
           <Board />
         </Route>
 
         <Route path='/'>
           <Form />
+          <RoomList />
         </Route>
 
       </Switch>

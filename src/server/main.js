@@ -5,16 +5,18 @@ import fs from 'fs'
 import Koa from 'koa'
 import Router from 'koa-router'
 
-import Game from '../game/game'
-import Player from '../game/player'
+import Game from './game'
+import Player from './player'
 
 const socket_port = 3004;
 const server_port = 3005;
 
-// import * as server from './index'
-
 const app = new Koa();
 const router = new Router();
+
+/* ------------------------------------------------------------------------*/
+/* - HTTP SERVER ----------------------------------------------------------*/
+/* ------------------------------------------------------------------------*/
 
 router.get('/', (ctx, next) => {
   fs.readFile('./index.html', null, (error, data) => {
@@ -53,15 +55,9 @@ const file = req.url === '/bundle.js' ?
 /* - SOCKET ---------------------------------------------------------------*/
 /* ------------------------------------------------------------------------*/
 
+/* - SOCKET ROUTER --------------------------------------------------------*/
 const GAMES = [];
 const USERS = [];
-
-const opts = {
-  gridx: 10,
-  gridy: 20,
-  tickDuration: 2000,
-  heatRoomTime: 1000,
-}
 
 function getRoomList() {
   return GAMES.map((game) => ({
@@ -73,16 +69,53 @@ function getRoomList() {
   }))
 }
 
-const reducer = (socket, action) => {
+const reducer = (socket, action) => { // RENAME INTO ROUTER !! ??
   switch (action.type) {
 
   case 'CREATE_ROOM':
-    const game = new Game(opts)
+    // check users right to creating room
+    const defaults_opts = {
+      gridx: 10,
+      gridy: 20,
+      tickDuration: 2000,
+      heatRoomTime: 1000,
+    }
+    const game = new Game(defaults_opts)
     GAMES.push(game);
-    socket.emit('action', { type: 'ROOM_CREATED', payload: game.id })
+
+    // game.addPlayer(user)
+    socket.emit('action', {
+      type: 'ROOM_CREATED',
+      payload:
+      {
+        id: game.id,
+        players: game.players.map((player) => ({
+          id: player.id,
+          pseudo: player.pseudo,
+        })),
+      },
+
+    })
+    socket.broadcast.emit(
+      'action', {
+        type: 'ROOM_CREATED',
+        payload:
+        {
+          id: game.id,
+          players: game.players.map((player) => ({
+            id: player.id,
+            pseudo: player.pseudo,
+          })),
+        },
+      }
+    );
+    console.log(`room_created: ${game.id}`);
     break;
 
   case 'JOINT_ROOM':
+    console.log('JOINT_ROOM', action);
+
+    // THIS USER TRY TO JOIN ROOM
     socket.emit('action', { type: 'ROOM_JOINTED', payload: '' })
     break;
 
@@ -92,6 +125,9 @@ const reducer = (socket, action) => {
 
   case 'GET_ROOM_LIST':
     socket.emit('action', { type: 'ROOM_LIST', payload: getRoomList() })
+
+    console.log(getRoomList());
+    console.log('GET_ROOM_LIST');
     break;
 
   default:
@@ -99,6 +135,7 @@ const reducer = (socket, action) => {
   }
 }
 
+/* - SOCKET CREATE --------------------------------------------------------*/
 const server = http.createServer();
 server.listen(socket_port);
 const socketio = io(server, { origins: '*:*' });

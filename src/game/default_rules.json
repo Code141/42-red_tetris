@@ -1,8 +1,5 @@
 {
-  "actions":{
-    "moveDown": {},
-    "turnRight": {}
-  },
+  "actions": [ "moveDown", "turnRight", "strafe_left", "strafe_right" ],
   "pieces":
   [
     [

@@ -2,58 +2,34 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { setUserNameAction } from '../actions/user'
 
-const Form = ({ message, setUserName, messageToServer }) => {
-  return (
-        <div>
+const Form = ({ message, setUserName }) => (
+  <div>
             PLAYER SOCKET_ID
 
-          <input
-            type='text'
-            placeholder='Player pseudo'
-          />
+    <input
+      placeholder='Player pseudo'
+      type='text'
+    />
 
-          <button
-            onClick={ () => { setUserName('TOTO') } }
-          >
+    <button
+      onClick={ () => { setUserName('TOTO') } }
+    >
             change pseudo
-          </button>
+    </button>
 
-          <hr />
+    <hr />
 
-          <button
-            onClick={ () => { messageToServer('PAYLOAD') } }
-          >
-            CREATE ROOM
-          </button>
+    <hr />
 
-          <button>
-            JOINT ROOM
-          </button>
+  </div>
+)
 
-          <hr />
+const mapStateToProps = (state) => ({
+  game: state.game,
+})
 
-        </div>
-  )
-}
-
-function sendSocketMessageAction(payload) {
-  return {
-    type: 'CREATE_ROOM',
-    payload,
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    game: state.game,
-  }
-}
-
-const mapDispatchToProps = (dispatch, payload) => {
-  return {
-    setUserName: (username) => dispatch(setUserNameAction(username)),
-    messageToServer: (message) => dispatch(sendSocketMessageAction(message)),
-  }
-}
+const mapDispatchToProps = (dispatch, payload) => ({
+  setUserName: (username) => dispatch(setUserNameAction(username)),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
