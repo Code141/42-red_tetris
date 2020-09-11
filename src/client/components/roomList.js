@@ -2,28 +2,24 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 
-const Room = (room, index, jointRoom) => (
+const Room = ({ room, jointRoom }) => (
   <div>
     <hr />
-
     <div>
-      local_id : {index}  nb_players : {room.players.length}
+      {room.id}
       <br />
-      <Link to={`/game/${room.id}`}>
+      nb_players : {room.players.length}
+      <br />
+      <Link to={`/room/${room.id}`}>
         <button
           onClick={ () => {
-            jointRoom({
-              type: 'JOINT_ROOM',
-              payload: room.id,
-            })
+            jointRoom(room.id)
           } }
         >
-          JOINT ROOM {room.id}
+          JOINT ROOM
         </button>
       </Link>
-
     </div>
-
   </ div>
 )
 
@@ -31,49 +27,68 @@ const RoomList = ({ rooms, createRoom, getRoomList, jointRoom }) => (
   <div>
     <hr />
     <button
-      onClick={ () => {
-        createRoom({
-          type: 'CREATE_ROOM',
-          payload: 'PAYLOAD/game_opts?',
-        })
-      } }
+      onClick={ () => { createRoom('PAYLOAD/game_opts?') } }
     >
-            CREATE ROOM
+      CREATE ROOM
     </button>
 
     <button
       onClick={ () => {
-        createRoom({
-          type: 'GET_ROOM_LIST',
-          payload: 'PAYLOAD/filters?',
-        })
+        getRoomList('PAYLOAD/filters?')
       } }
     >
-            GET ROOM LIST
+      GET ROOM LIST
     </button>
+
     <hr />
-      ROOMLIST
+
+    ROOMLIST
+
     ({rooms.length} room)
 
     {
-      rooms.map((room, index) => (Room(room, index, jointRoom)))
+      rooms.map((room) => (
+        <Room
+          jointRoom={jointRoom}
+          key={room.id}
+          room={room}
+        />
+      )
+      )
     }
     <hr />
   </ div>
 )
 
+function createRoomAction(options) {
+  return {
+    type: 'CREATE_ROOM',
+    payload: options,
+  }
+}
+
+function getRoomListAction(filters) {
+  return {
+    type: 'GET_ROOM_LIST',
+    payload: filters,
+  }
+}
+
+function jointRoomAction(roomId) {
+  return {
+    type: 'JOINT_ROOM',
+    payload: roomId,
+  }
+}
+
 const mapStateToProps = (state) => ({
   rooms: state.rooms,
 })
 
-function sendSocketMessageAction(payload) {
-  return (payload);
-}
-
-const mapDispatchToProps = (dispatch, payload) => ({
-  createRoom: (message) => dispatch(sendSocketMessageAction(message)),
-  getRoomList: (message) => dispatch(sendSocketMessageAction(message)),
-  jointRoom: (message) => dispatch(sendSocketMessageAction(message)),
+const mapDispatchToProps = (dispatch) => ({
+  createRoom: (options) => dispatch(createRoomAction(options)),
+  getRoomList: (filters) => dispatch(getRoomListAction(filters)),
+  jointRoom: (roomId) => dispatch(jointRoomAction(roomId)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomList);

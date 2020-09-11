@@ -5,7 +5,7 @@ import EventEmitter from 'events'
 class Player extends EventEmitter {
   constructor(socket, pseudo) {
     super();
-    this.id = crypto.randomBytes(20).toString('hex');
+    this.id = crypto.randomBytes(3).toString('hex');
     this.pseudo = pseudo;
     this.socket = socket;
     this.score = 0;

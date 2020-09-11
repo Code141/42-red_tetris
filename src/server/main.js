@@ -56,20 +56,25 @@ const file = req.url === '/bundle.js' ?
 /* ------------------------------------------------------------------------*/
 
 /* - SOCKET ROUTER --------------------------------------------------------*/
-const GAMES = [];
+const ROOMS = [];
 const USERS = [];
 
-function getRoomList() {
-  return GAMES.map((game) => ({
-    id: game.id,
-    players: game.players.map((player) => ({
+function getRoomInfo(room) {
+  return {
+    id: room.id,
+    admin: room.admin.id,
+    players: room.players.map((player) => ({
       id: player.id,
       pseudo: player.pseudo,
     })),
-  }))
+  }
 }
 
-const reducer = (socket, action) => { // RENAME INTO ROUTER !! ??
+function getRoomList() {
+  return ROOMS.map((room) => getRoomInfo(room));
+}
+
+const reducer = (user, action) => { // RENAME INTO ROUTER !! ??
   switch (action.type) {
 
   case 'CREATE_ROOM':
@@ -78,60 +83,61 @@ const reducer = (socket, action) => { // RENAME INTO ROUTER !! ??
       gridx: 10,
       gridy: 20,
       tickDuration: 2000,
-      heatRoomTime: 1000,
+      heatRoomTime: 10000,
+      maxPlayer: 2,
+      allowSpectator: true,
     }
-    const game = new Game(defaults_opts)
-    GAMES.push(game);
+    const room = new Game(defaults_opts, user)
+    ROOMS.push(room);
 
-    // game.addPlayer(user)
-    socket.emit('action', {
-      type: 'ROOM_CREATED',
-      payload:
-      {
-        id: game.id,
-        players: game.players.map((player) => ({
-          id: player.id,
-          pseudo: player.pseudo,
-        })),
-      },
+    // room.addPlayer(user)
+    user.socket.emit('action', { type: 'ROOM_CREATED', payload: getRoomInfo(room) });
+    user.socket.broadcast.emit('action', { type: 'ROOM_CREATED', payload: getRoomInfo(room) });
 
-    })
-    socket.broadcast.emit(
-      'action', {
-        type: 'ROOM_CREATED',
-        payload:
-        {
-          id: game.id,
-          players: game.players.map((player) => ({
-            id: player.id,
-            pseudo: player.pseudo,
-          })),
-        },
-      }
-    );
-    console.log(`room_created: ${game.id}`);
+    // OBSOLETE ACTION PAYLOAD
+    // user.socket.emit('action', { type: 'ROOM_JOINTED', payload: room.id })
+    console.log(`room_created: ${room.id}`);
     break;
 
   case 'JOINT_ROOM':
+
     console.log('JOINT_ROOM', action);
+    const room_to_join = ROOMS.find(room => room.id === action.payload);
+    if (!room_to_join) { user.socket.emit('action', { type: 'ERROR', payload: 'room_doesn\'t existe' }) }
 
     // THIS USER TRY TO JOIN ROOM
-    socket.emit('action', { type: 'ROOM_JOINTED', payload: '' })
+    // CHECK ABILITY TO JOIN ROOM
+
+    if (room_to_join.addPlayer(user)) {
+      user.socket.emit('action', { type: 'ROOM_JOINTED', payload: {
+        id: room_to_join.id,
+        admin: room_to_join.admin.id,
+        players: room_to_join.players.map((player) => ({
+          id: player.id,
+          pseudo: player.pseudo,
+        })),
+        spectators: room_to_join.spectators.map((spectator) => ({
+          id: spectator.id,
+          pseudo: spectator.pseudo,
+        })),
+      },
+      })
+      user.socket.broadcast.emit('action', { type: 'ROOM_LIST', payload: getRoomList() })
+    }
     break;
 
   case 'LEAVE_ROOM':
-    socket.emit('action', { type: 'ROOM_LEAVED', payload: '' })
+    user.socket.emit('action', { type: 'ROOM_LEAVED', payload: '' })
     break;
 
   case 'GET_ROOM_LIST':
-    socket.emit('action', { type: 'ROOM_LIST', payload: getRoomList() })
-
+    user.socket.emit('action', { type: 'ROOM_LIST', payload: getRoomList() })
     console.log(getRoomList());
     console.log('GET_ROOM_LIST');
     break;
 
   default:
-    console.log('UNKNOW ACTION');
+    console.log('WARNING UNKNOW ACTION');
   }
 }
 
@@ -145,10 +151,11 @@ socketio.on('connection', (socket) => {
 
   const user = new Player(socket, 'jean')
   USERS.push(user);
+
   socket.emit('connected', { idPlayer: socket.id })
 
   socket.on('action', (action) => {
-    reducer(socket, action);
+    reducer(user, action);
   })
 
   socket.on('disconnect', () => {

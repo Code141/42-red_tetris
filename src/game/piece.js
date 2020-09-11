@@ -5,7 +5,7 @@ class Piece {
     this.buffPiece = new bufferFrom(piece)
   }
 
-  turnRight() {
+  turnClockwise() {
   }
 
 }

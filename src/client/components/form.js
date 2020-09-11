@@ -4,8 +4,7 @@ import { setUserNameAction } from '../actions/user'
 
 const Form = ({ message, setUserName }) => (
   <div>
-            PLAYER SOCKET_ID
-
+    PLAYER SOCKET_ID
     <input
       placeholder='Player pseudo'
       type='text'
@@ -14,7 +13,7 @@ const Form = ({ message, setUserName }) => (
     <button
       onClick={ () => { setUserName('TOTO') } }
     >
-            change pseudo
+      change pseudo
     </button>
 
     <hr />
@@ -24,12 +23,8 @@ const Form = ({ message, setUserName }) => (
   </div>
 )
 
-const mapStateToProps = (state) => ({
-  game: state.game,
-})
-
 const mapDispatchToProps = (dispatch, payload) => ({
   setUserName: (username) => dispatch(setUserNameAction(username)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(null, mapDispatchToProps)(Form);

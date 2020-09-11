@@ -7,8 +7,9 @@ import {
 } from '../game/rules'
 
 class Game {
-  constructor(opts) {
-    this.id = crypto.randomBytes(20).toString('hex');
+  constructor(opts, user) {
+    this.id = crypto.randomBytes(3).toString('hex');
+    this.admin = user;
     this.spectators = [];
     this.players = [];
 
@@ -54,9 +55,10 @@ class Game {
   broadcast(actionName, payload) {
     this.players.forEach((player, index) => {
       player.socket.emit('action', payload);
-      spectators.socket.emit('action', payload);
+    });
 
-      // this.room.broadcast(payload)
+    this.spectators.forEach((spectator, index) => {
+      spectator.socket.emit('action', payload);
     });
   }
 
@@ -68,7 +70,7 @@ class Game {
         player.buffer = mergePieceInBuffer()
         player.pieces.shift();
         checkLines(player.buffer);
-        player.socket.send(tick, player.buffer);
+        player.socket.send('tick', player.buffer);
       }
       else {
         // piece.position.y -= 1;
@@ -78,7 +80,7 @@ class Game {
     this.broadcast('action',
       {
         type: 'NEXT_TICK',
-        payload: this.concatAllBuffers(),
+        payload: this.tick, // this.concatAllBuffers(),
       }
     );
 
@@ -94,9 +96,12 @@ class Game {
     return Buffer.concat(buffersToSend, totalLength);
   }
 
-  addPlayer(player) {
-    this.players.push(player);
-    player.socket.join(this.id);
+  addPlayer(user) {
+    if (this.players.find(player => user === player)) { return false; }
+
+    this.players.push(user);
+    user.socket.join(this.id);
+    return true;
   }
 
   removePlayer(socket) {

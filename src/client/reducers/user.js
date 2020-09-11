@@ -2,7 +2,7 @@ import { SET_USERNAME } from '../actions/user'
 
 const user = {
   id: '',
-  name: 'john',
+  name: 'johnDoe',
 };
 
 const reducer = (state = user, action) => {

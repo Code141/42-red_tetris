@@ -5,10 +5,11 @@ import { Provider } from 'react-redux'
 import rootReducer from './reducers'
 import App from './containers/app'
 import Socket from './middleware/socket';
-
-const socket = Socket('localhost:3004');
+import { BrowserRouter as Router } from 'react-router-dom';
+import history from './history';
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const socket = Socket('localhost:3004');
 
 const store = createStore(
   rootReducer,
@@ -17,6 +18,9 @@ const store = createStore(
 
 ReactDom.render((
   <Provider store={store}>
-    <App/>
+    <Router history={history}>
+      <App/>
+    </Router>
   </Provider>
 ), document.getElementById('tetris'))
+

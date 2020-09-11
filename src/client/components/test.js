@@ -16,6 +16,7 @@ const Board = ({ game, clickOnCell }) => (
     }
   </div>
 )
+
 const Cell2 = ({ game }) => (
   <div>
     {game}
@@ -43,6 +44,7 @@ const Line = ({ cells, y, callback }) => (
     )(Cell2);
     })
     */
+
     }
     {
       cells.map((cell, index) =>

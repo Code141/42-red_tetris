@@ -6,6 +6,15 @@ export function moveDown(buffer, piece) {
   return pieceHasLanded;
 }
 
+export function turnClockwise(piece, buffer) {
+}
+
+export function strafeLeft(piece, buffer) {
+}
+
+export function strafeRight(piece, buffer) {
+}
+
 export function hardDrop(piece, buffer) {
   if (moveDown(piece, buffer)) { hardDrop(piece, buffer); }
   else { mergePieceInBuffer(piece, buffer); }

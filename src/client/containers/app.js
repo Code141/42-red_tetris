@@ -1,53 +1,41 @@
 import React from 'react'
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
   Link,
 } from 'react-router-dom';
-import { connect } from 'react-redux'
-import Board from '../components/test'
+
+import Game from '../containers/game'
 import Form from '../components/form'
 import RoomList from '../components/roomList'
 
-const App = ({ message }) => (
+const App = () => (
   <div className='wrap'>
-    <Router>
-
-      <nav>
-        <ul>
-          <li>
-            <Link to='/'>
+    <nav>
+      <ul>
+        <li>
+          <Link to='/'>
                   Home
-            </Link>
-          </li>
-          <li>
-            <Link to='/game'>
+          </Link>
+        </li>
+        <li>
+          <Link to='/room'>
                   Game
-            </Link>
-          </li>
-        </ul>
-      </nav>
+          </Link>
+        </li>
+      </ul>
+    </nav>
 
-      <hr/>
+    <hr/>
 
-      <Switch>
+    <Route path='/room'>
+      <Game />
+    </Route>
 
-        <Route path='/game'>
-          <button>
-            LEAVE_ROOM
-          </button>
-          <Board />
-        </Route>
-
-        <Route path='/'>
-          <Form />
-          <RoomList />
-        </Route>
-
-      </Switch>
-
-    </Router>
+    <Route exact path='/'>
+      <Form />
+      <RoomList />
+    </Route>
 
   </div>
 )

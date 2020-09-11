@@ -1,5 +1,10 @@
 {
-  "actions": [ "moveDown", "turnRight", "strafe_left", "strafe_right" ],
+  "actions": [
+    "moveDown",
+    "turnClockwise",
+    "strafeLeft",
+    "strafeRight"
+  ],
   "pieces":
   [
     [

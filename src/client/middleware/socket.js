@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import history from '../history';
 
 const Socket = (url) => store => {
 
@@ -33,11 +34,11 @@ const Socket = (url) => store => {
   });
 
   socket.on('action', (action) => {
-    console.log('ACTION FROM SERVER =>');
-
-    console.log(action);
+    console.log('ACTION FROM SERVER =>', action);
 
     store.dispatch(action);
+
+    // if (action.type === 'ROOM_JOINTED') { history.push(`/room/${action.payload}`); }
   });
 
   return next => action => {
