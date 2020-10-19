@@ -15,6 +15,40 @@ const app = new Koa();
 const router = new Router();
 
 /* ------------------------------------------------------------------------*/
+/* - TOOL COLOR CONSOLE ---------------------------------------------------*/
+/* ------------------------------------------------------------------------*/
+
+const termColors = {
+  Reset: '\x1b[0m',
+  bright: '\x1b[1m',
+  dim: '\x1b[2m',
+  underscore: '\x1b[4m',
+  blink: '\x1b[5m',
+  Reverse: '\x1b[7m',
+  Hidden: '\x1b[8m',
+  FgBlack: '\x1b[30m',
+  FgRed: '\x1b[31m',
+  FgGreen: '\x1b[32m',
+  FgYellow: '\x1b[33m',
+  FgBlue: '\x1b[34m',
+  FgMagenta: '\x1b[35m',
+  FgCyan: '\x1b[36m',
+  FgWhite: '\x1b[37m',
+  BgBlack: '\x1b[40m',
+  BgRed: '\x1b[41m',
+  BgGreen: '\x1b[42m',
+  BgYellow: '\x1b[43m',
+  BgBlue: '\x1b[44m',
+  BgMagenta: '\x1b[45m',
+  BgCyan: '\x1b[46m',
+  BgWhite: '\x1b[47m',
+}
+
+function colorise(str, color) {
+  return `${termColors[color]}${str}${termColors.Reset}`;
+}
+
+/* ------------------------------------------------------------------------*/
 /* - HTTP SERVER ----------------------------------------------------------*/
 /* ------------------------------------------------------------------------*/
 
@@ -47,15 +81,16 @@ app
 
 /*
 const file = req.url === '/bundle.js' ?
-  '/../../build/bundle.js' :
-  '/../../index.html'
-  */
+'/../../build/bundle.js' :
+'/../../index.html'
+*/
 
 /* ------------------------------------------------------------------------*/
 /* - SOCKET ---------------------------------------------------------------*/
 /* ------------------------------------------------------------------------*/
 
 /* - SOCKET ROUTER --------------------------------------------------------*/
+
 const ROOMS = [];
 const USERS = [];
 
@@ -65,7 +100,7 @@ function getRoomInfo(room) {
     admin: room.admin.id,
     players: room.players.map((player) => ({
       id: player.id,
-      pseudo: player.pseudo,
+      username: player.username,
     })),
   }
 }
@@ -82,11 +117,12 @@ const reducer = (user, action) => { // RENAME INTO ROUTER !! ??
     const defaults_opts = {
       gridx: 10,
       gridy: 20,
-      tickDuration: 2000,
-      heatRoomTime: 10000,
+      tickDuration: 100,
+      heatRoomTime: 100,
       maxPlayer: 2,
       allowSpectator: true,
     }
+
     const room = new Game(defaults_opts, user)
     ROOMS.push(room);
 
@@ -94,7 +130,7 @@ const reducer = (user, action) => { // RENAME INTO ROUTER !! ??
     user.socket.emit('action', { type: 'ROOM_CREATED', payload: getRoomInfo(room) });
     user.socket.broadcast.emit('action', { type: 'ROOM_CREATED', payload: getRoomInfo(room) });
 
-    // OBSOLETE ACTION PAYLOAD
+    // OBSOLETE ACTION'S PAYLOAD
     // user.socket.emit('action', { type: 'ROOM_JOINTED', payload: room.id })
     console.log(`room_created: ${room.id}`);
     break;
@@ -103,31 +139,29 @@ const reducer = (user, action) => { // RENAME INTO ROUTER !! ??
 
     console.log('JOINT_ROOM', action);
     const room_to_join = ROOMS.find(room => room.id === action.payload);
-    if (!room_to_join) { user.socket.emit('action', { type: 'ERROR', payload: 'room_doesn\'t existe' }) }
+    if (!room_to_join) {
+      user.socket.emit('action', { type: 'ERROR', payload: 'room_doesn\'t existe' })
+      return;
+    }
 
     // THIS USER TRY TO JOIN ROOM
     // CHECK ABILITY TO JOIN ROOM
 
     if (room_to_join.addPlayer(user)) {
-      user.socket.emit('action', { type: 'ROOM_JOINTED', payload: {
-        id: room_to_join.id,
-        admin: room_to_join.admin.id,
-        players: room_to_join.players.map((player) => ({
-          id: player.id,
-          pseudo: player.pseudo,
-        })),
-        spectators: room_to_join.spectators.map((spectator) => ({
-          id: spectator.id,
-          pseudo: spectator.pseudo,
-        })),
-      },
-      })
+
       user.socket.broadcast.emit('action', { type: 'ROOM_LIST', payload: getRoomList() })
     }
     break;
 
   case 'LEAVE_ROOM':
+    user.leaveRoom();
+
     user.socket.emit('action', { type: 'ROOM_LEAVED', payload: '' })
+    break;
+
+  case 'START_GAME':
+    if (user.room.admin !== user) { return; } // FAIL MUST CHECK BETTER
+    user.room.startGame();
     break;
 
   case 'GET_ROOM_LIST':
@@ -147,7 +181,7 @@ server.listen(socket_port);
 const socketio = io(server, { origins: '*:*' });
 
 socketio.on('connection', (socket) => {
-  console.log(`Socket connected: ${ socket.id}`)
+  console.log(`Socket connected: ${socket.id}`)
 
   const user = new Player(socket, 'jean')
   USERS.push(user);
@@ -155,6 +189,7 @@ socketio.on('connection', (socket) => {
   socket.emit('connected', { idPlayer: socket.id })
 
   socket.on('action', (action) => {
+    console.log(` ${colorise('ACTION', 'FgRed')} ${colorise(action.type, 'FgGreen')} ${colorise('FROM', 'FgRed')} ${user.id} ${user.username} `);
     reducer(user, action);
   })
 

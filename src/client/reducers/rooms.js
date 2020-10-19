@@ -1,7 +1,4 @@
-import { GAME_ACTION } from '../actions/rooms'
-
-const rooms = [
-];
+const rooms = [];
 
 const reducer = (state = rooms, action) => {
   switch (action.type) {

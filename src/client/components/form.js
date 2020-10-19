@@ -6,14 +6,14 @@ const Form = ({ message, setUserName }) => (
   <div>
     PLAYER SOCKET_ID
     <input
-      placeholder='Player pseudo'
+      placeholder='Player username'
       type='text'
     />
 
     <button
       onClick={ () => { setUserName('TOTO') } }
     >
-      change pseudo
+      change username
     </button>
 
     <hr />

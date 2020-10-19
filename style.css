@@ -3,10 +3,10 @@
 
 .board{
   width: 200px;
-  height: 400px;
   display: flex;
   flex-direction: column;
   border: 10px solid black;
+  float:left;
 }
 
 .line{
@@ -22,4 +22,28 @@
   height: 18px;
   border: 1px solid white;
   background-color: rgba(200, 200, 255);
+}
+
+
+.c0{
+  background-color: rgba(255, 255, 255, 1);
+}
+.c1{
+  background-color: rgba(0, 0, 255, 1);
+}
+.c2{
+  background-color: rgba(0, 255, 255, 1);
+}
+.c3{
+  background-color: rgba(0, 255, 0, 1);
+}
+.c4{
+  background-color: rgba(255, 255, 0, 1);
+}
+.c5{
+  background-color: rgba(255, 0, 0, 1);
+}
+
+.c255{
+  background-color: rgba(64, 64, 64, 1);
 }

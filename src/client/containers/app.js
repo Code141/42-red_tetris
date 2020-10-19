@@ -28,9 +28,7 @@ const App = () => (
 
     <hr/>
 
-    <Route path='/room'>
-      <Game />
-    </Route>
+    <Route component={Game} path='/room' />
 
     <Route exact path='/'>
       <Form />

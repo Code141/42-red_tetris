@@ -11,11 +11,7 @@ const Room = ({ room, jointRoom }) => (
       nb_players : {room.players.length}
       <br />
       <Link to={`/room/${room.id}`}>
-        <button
-          onClick={ () => {
-            jointRoom(room.id)
-          } }
-        >
+        <button onClick={ () => jointRoom(room.id) } >
           JOINT ROOM
         </button>
       </Link>
@@ -26,17 +22,11 @@ const Room = ({ room, jointRoom }) => (
 const RoomList = ({ rooms, createRoom, getRoomList, jointRoom }) => (
   <div>
     <hr />
-    <button
-      onClick={ () => { createRoom('PAYLOAD/game_opts?') } }
-    >
+
+    <button onClick={ () => createRoom('PAYLOAD/game_opts?') } >
       CREATE ROOM
     </button>
-
-    <button
-      onClick={ () => {
-        getRoomList('PAYLOAD/filters?')
-      } }
-    >
+    <button onClick={ () => getRoomList('PAYLOAD/filters?') } >
       GET ROOM LIST
     </button>
 
@@ -45,18 +35,15 @@ const RoomList = ({ rooms, createRoom, getRoomList, jointRoom }) => (
     ROOMLIST
 
     ({rooms.length} room)
-
     {
-      rooms.map((room) => (
+      rooms.map((room) =>
         <Room
           jointRoom={jointRoom}
           key={room.id}
           room={room}
         />
       )
-      )
     }
-    <hr />
   </ div>
 )
 

@@ -1,36 +1,114 @@
 /* move */
 
-export function moveDown(buffer, piece) {
-  let pieceHasLanded = false
-  pieceHasLanded = true;
-  return pieceHasLanded;
+export function moveDown(board, piece) {
+  piece.y = piece.y + 1;
+  if (checkCollision(board, piece)) {
+    piece.y = piece.y - 1;
+    return false;
+  }
+  return true;
 }
 
-export function turnClockwise(piece, buffer) {
+export function turnClockwise(board, piece) {
 }
 
-export function strafeLeft(piece, buffer) {
+export function strafeLeft(board, piece) {
+  piece.x = piece.x - 1;
+  if (checkCollision(board, piece)) {
+    piece.x = piece.x + 1;
+    return false;
+  }
+  return true;
 }
 
-export function strafeRight(piece, buffer) {
+export function strafeRight(board, piece) {
+  piece.x = piece.x + 1;
+  if (checkCollision(board, piece)) {
+    piece.x = piece.x - 1;
+    return false;
+  }
+  return true;
 }
 
-export function hardDrop(piece, buffer) {
-  if (moveDown(piece, buffer)) { hardDrop(piece, buffer); }
-  else { mergePieceInBuffer(piece, buffer); }
+export function hardDrop(board, piece) {
+  if (moveDown(board, piece)) { hardDrop(board, piece); }
+  else { mergePieceInBoard(board, piece); }
 }
 
 /* */
 
-export function checkMove(buffer, piece) {
+export function checkCollision(board, piece) {
+  // APPLY ROTATION WHILE COPY PIECE IN NEW BUFFER
 
+  // THEN CHECK COLLISION
+
+  // check if the piece hit the bottom
+  if (piece.height + piece.y > board.buffer.length) {
+    return true;
+  }
+
+  // hit left
+  if (piece.x < 0) {
+    return true;
+  }
+
+  // hit right
+  if (piece.x + piece.width > board.width) {
+    return true;
+  }
+
+  // check if the piece is over something
+  for (let y = 0, l = piece.buffer.length; y < l; y++) {
+    const pline = piece.buffer[y];
+    for (let x = 0, ll = pline.length; x < ll; x++) {
+      const pcell = pline[x];
+      if (pcell !== 0) {
+        if (board.buffer[piece.y + y][piece.x + x]) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
 }
 
-export function mergePieceInBuffer(piece, buffer) {
-  let newBuffer;
-  return newBuffer;
+export function mergePieceInBoard(board, piece) {
+  const pieceBuffer = piece.buffer;
+  const boardBuffer = board.buffer;
+  const l = piece.height;
+  const ll = piece.width;
+  let y = 0;
+  let x = 0;
+
+  while (y < l) {
+    while (x < ll) {
+      if (pieceBuffer[y][x] !== 0) {
+        boardBuffer[piece.y + y][piece.x + x] = pieceBuffer[y][x];
+      }
+      x++;
+    }
+    x = 0;
+    y++;
+  }
 }
 
-export function checkLines(buffer) {
-  return buffer;
+export function checkLine(board) {
+  const lines = [];
+  const buffer = board.buffer;
+  const l = board.height;
+  const ll = board.width;
+  let y = 0;
+  let x = 0;
+
+  while (y < l) {
+    while (x < ll && buffer[y][x] !== 0 && buffer[y][x] !== 255) {
+      x++;
+    }
+    if (x === ll) {
+      lines.push(y);
+    }
+    x = 0;
+    y++;
+  }
+  return lines;
 }

@@ -1,6 +1,8 @@
 import io from 'socket.io-client';
 import history from '../history';
 
+const MOVE_REQUEST_STACK = [];
+
 const Socket = (url) => store => {
 
   const socket = io(url);
@@ -35,10 +37,17 @@ const Socket = (url) => store => {
 
   socket.on('action', (action) => {
     console.log('ACTION FROM SERVER =>', action);
-
     store.dispatch(action);
+  });
 
-    // if (action.type === 'ROOM_JOINTED') { history.push(`/room/${action.payload}`); }
+  socket.on('move', (action) => {
+    console.log('MOVE FROM SERVER =>', action);
+    store.dispatch(action);
+  });
+
+  socket.on('fact', (action) => {
+    console.log('FACT FROM SERVER =>', action);
+    store.dispatch(action);
   });
 
   return next => action => {
@@ -48,6 +57,7 @@ const Socket = (url) => store => {
     'ROOM_JOINTED'
     'ROOM_LEAVED'
     'ROOM_LIST',
+    'GAME_STARTED',
     'NEXT_TICK'
     */
 
@@ -57,9 +67,16 @@ const Socket = (url) => store => {
     case 'JOINT_ROOM':
     case 'LEAVE_ROOM':
     case 'GET_ROOM_LIST':
+    case 'START_GAME':
       socket.emit('action', action);
       return;
       break;
+
+    case 'MOVE':
+      socket.emit('move', action);
+      return;
+      break;
+
     default:
       return next(action);
     }
