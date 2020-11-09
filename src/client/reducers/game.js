@@ -1,5 +1,5 @@
 import {
-  GAME_STARTED,
+  GAME_STATUS,
   ROOM_JOINTED,
   LEAVE_ROOM,
   NEXT_TICK,
@@ -17,18 +17,25 @@ const game = {
 };
 
 const reducer = (state = game, action) => {
+  let players;
+
   switch (action.type) {
 
-  case GAME_STARTED:
+  case GAME_STATUS:
     return {
       ...state,
-      gameHasStarted: true,
+      ...action.payload,
     }
 
   case LOOSE:
+    players = state.players.map((player) => {
+      if (player.id === action.payload.userid) { return { ...player, loose: true } }
+      return { ...player }
+    });
+
     return {
       ...state,
-      gameHasStarted: true,
+      players,
     }
 
   case ROOM_JOINTED:
@@ -53,7 +60,7 @@ const reducer = (state = game, action) => {
     };
 
   case NEXT_PIECE:
-    const players = state.players.map((player) => ({
+    players = state.players.map((player) => ({
       ...player,
       pieces: [
         ...player.pieces,

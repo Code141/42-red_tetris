@@ -3,7 +3,7 @@ export const ROOM_JOINTED = 'ROOM_JOINTED';
 export const LEAVE_ROOM = 'LEAVE_ROOM';
 export const NEXT_TICK = 'NEXT_TICK';
 export const NEXT_PIECE = 'NEXT_PIECE';
-export const GAME_STARTED = 'GAME_STARTED';
+export const GAME_STATUS = 'GAME_STATUS';
 export const LOOSE = 'LOOSE';
 
 /*

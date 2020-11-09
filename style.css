@@ -9,6 +9,11 @@
   float:left;
 }
 
+.loose{
+  filter: saturate(0.3) blur(0.5px);
+  border: 10px solid red;
+}
+
 .line{
   display: inline-block;
   width: 200px;

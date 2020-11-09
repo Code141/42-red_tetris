@@ -23,49 +23,29 @@ class Game {
   }
 
   startGame() {
+    console.log('START GAME')
     if (this.gameHasStarted) { return; }
     this.gameHasStarted = true;
     this.round++;
+
     this.tick = 0;
+    this.pieces = [];
+    this.players.forEach(player => {
+      player.loose = false;
+      player.board.clear();
+      player.pieces = [];
+      player.nbPiecesLanded = 0;
+    })
+
+    this.servePiece();
 
     /*
     this.servePiece();
     this.servePiece();
-    this.servePiece();
     */
-
-    let NP = new Piece(6, this.rules);
-    NP.x = 9;
-    this.servePiece(NP);
-    NP = new Piece(6, this.rules);
-    NP.x = 8;
-    this.servePiece(NP);
-    NP = new Piece(6, this.rules);
-    NP.x = 7;
-    this.servePiece(NP);
-    NP = new Piece(6, this.rules);
-    NP.x = 6;
-    this.servePiece(NP);
-    NP = new Piece(6, this.rules);
-    NP.x = 5;
-    this.servePiece(NP);
-    NP = new Piece(6, this.rules);
-    NP.x = 4;
-    this.servePiece(NP);
-    NP = new Piece(6, this.rules);
-    NP.x = 3;
-    this.servePiece(NP);
-    NP = new Piece(6, this.rules);
-    NP.x = 2;
-    this.servePiece(NP);
-    NP = new Piece(6, this.rules);
-    NP.x = 1;
-    this.servePiece(NP);
-    NP = new Piece(6, this.rules);
-    NP.x = 0;
-    this.servePiece(NP);
-
-    this.broadcast('action', { type: 'GAME_STARTED', payload: null });
+    this.broadcast('action', { type: 'GAME_STATUS', payload:
+      this.info(),
+    });
 
     setTimeout(() => {
       this.loop = setInterval(() => {
@@ -78,17 +58,28 @@ class Game {
     if (this.loop) { clearInterval(this.loop); }
     this.loop = undefined;
     this.gameHasStarted = false;
+    console.log('STOP GAME')
+
+    /*
+    this.broadcast('action', { type: 'GAME_STATUS', payload: {
+      gameHasStarted: false,
+    } });
+    */
+  }
+
+  nextMatch() {
+    this.stopGame();
+
+    setTimeout(() => {
+      this.startGame();
+    }, 1000)
+
   }
 
   closeGame() {
     // if (this.players.length === 0) => lunch this.closeGame()
     // broadcast players and spectators "good by"
     // (emit to top level => free me)
-  }
-
-  nextMatch() {
-    this.stopGame();
-    this.startGame();
   }
 
   broadcast(actionName, payload) {
@@ -113,37 +104,34 @@ class Game {
     return new Piece(pieceIndex, this.rules);
   }
 
-  servePiece(newPiece) {
-    if (newPiece === undefined) { newPiece = this.generateNewPiece(); }
+  servePiece(newPiece = this.generateNewPiece()) {
     this.pieces.push(newPiece);
     this.players.forEach((player) => {
       player.pieces.push({ ...newPiece });
     });
 
-    this.broadcast('action', { type: 'NEXT_PIECE', payload: {
-      id: newPiece.id,
-      x: newPiece.x,
-      y: newPiece.y,
-      rotation: newPiece.rotation,
-    } });
+    this.broadcast('action', { type: 'NEXT_PIECE', payload:
+      newPiece.info(),
+    });
+  }
+
+  isThereAWinner() {
+    const potentialWinners = this.players.filter(player => !player.loose);
+    if (potentialWinners.length === 1) {
+      const winner = potentialWinners[0];
+      winner.score++;
+      this.nextMatch();
+      return true;
+    }
+    else if (potentialWinners.length === 0) {
+      // DRAW GAME !
+      this.nextMatch();
+      return true;
+    }
+    return false;
   }
 
   nextTick() {
-
-    let loosers = 0;
-
-    this.players.forEach((player) => {
-      if (player.loose) {
-        loosers++;
-      }
-    });
-
-    if (loosers === this.players.length) {
-      this.stopGame();
-    }
-
-    // IF PIECE IS INTO SOMETHING, YOU LOOSE
-
     this.players.forEach((player) => {
       if (!player.loose) {
         player.gravityTick();
@@ -167,25 +155,16 @@ class Game {
 
     // user.socket.join(this.id); FOR BROADCAST
 
-    user.socket.emit('action', { type: 'ROOM_JOINTED', payload: {
-      id: this.id,
-      admin: this.admin.id,
-      players: this.players.map((player) => player.info()),
-      spectators: this.spectators.map((spectator) => ({
-        id: spectator.id,
-        username: spectator.username,
-      })),
-      gameHasStarted: this.gameHasStarted,
-      rules: this.rules,
-    } })
-
+    user.socket.emit('action', { type: 'ROOM_JOINTED', payload:
+      this.info(),
+    })
     return true;
   }
 
-  removePlayer(player) {
+  removePlayer(user) {
     if (this.players.find(player => player === user)) {
-      this.players.splice(this.players.indexOf(player), 1);
-      player.leaveRoom();
+      this.players.splice(this.players.indexOf(user), 1);
+      user.leaveRoom();
     }
 
     /*
@@ -199,6 +178,21 @@ class Game {
         this.emit('autodestruct')
         }
         */
+  }
+
+  info() {
+    return ({
+      id: this.id,
+      admin: this.admin.id,
+      players: this.players.map(player => player.info()),
+      pieces: this.pieces.map(piece => piece.info()),
+      spectators: this.spectators.map(spectator => ({
+        id: spectator.id,
+        username: spectator.username,
+      })),
+      gameHasStarted: this.gameHasStarted,
+      rules: this.rules,
+    });
   }
 
 }

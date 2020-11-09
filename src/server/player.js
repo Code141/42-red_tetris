@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import { moveDown, strafeLeft, strafeRight, checkCollision, mergePieceInBoard, checkLine } from '../game/rules'
+import { moveDown, strafeLeft, strafeRight, checkCollision } from '../game/rules'
 import EventEmitter from 'events'
 
 class Player extends EventEmitter {
@@ -12,6 +12,7 @@ class Player extends EventEmitter {
     this.room = null;
 
     this.score = 0;
+
     this.loose = false;
     this.nbPiecesLanded = 0;
     this.pieces = [];
@@ -30,7 +31,6 @@ class Player extends EventEmitter {
         this.socket.emit('move', { type: action.payload });
       }
     });
-
   }
 
   gravityTick() {
@@ -40,22 +40,24 @@ class Player extends EventEmitter {
   }
 
   landPiece() {
-    mergePieceInBoard(this.board, this.pieces[0]);
+    this.board.mergePiece(this.pieces[0]);
     this.nbPiecesLanded++;
     this.pieces.shift();
 
-    const linesToDelete = checkLine(this.board);
+    const linesToDelete = this.board.checkLine();
     const nbLinesToDelete = linesToDelete.length;
     if (nbLinesToDelete > 0) {
       this.board.deleteLines(linesToDelete);
     }
 
     this.getNextPiece();
+
     if (checkCollision(this.board, this.pieces[0])) {
       this.loose = true;
       this.room.broadcast('fact', { type: 'LOOSE', payload: {
         userid: this.id,
       } });
+      this.room.isThereAWinner();
 
     }
   }
@@ -72,6 +74,8 @@ class Player extends EventEmitter {
   }
 
   jointRoom(room) {
+    if (this.room) { this.leaveRoom() }
+
     this.room = room;
 
     // ADD LISTNER
@@ -93,6 +97,7 @@ class Player extends EventEmitter {
       id: this.id,
       username: this.username,
       score: this.score,
+      loose: this.loose,
       nbPiecesLanded: this.nbPiecesLanded,
       pieces: this.pieces.map((piece) => ({
         id: piece.id,

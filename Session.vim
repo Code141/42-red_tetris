@@ -41,20 +41,19 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 87 + 47) / 95)
 exe 'vert 1resize ' . ((&columns * 117 + 182) / 365)
 exe '2resize ' . ((&lines * 28 + 47) / 95)
-exe 'vert 2resize ' . ((&columns * 118 + 182) / 365)
+exe 'vert 2resize ' . ((&columns * 124 + 182) / 365)
 exe '3resize ' . ((&lines * 26 + 47) / 95)
-exe 'vert 3resize ' . ((&columns * 118 + 182) / 365)
-exe '4resize ' . ((&lines * 31 + 47) / 95)
-exe 'vert 4resize ' . ((&columns * 118 + 182) / 365)
+exe 'vert 3resize ' . ((&columns * 124 + 182) / 365)
+exe '4resize ' . ((&lines * 35 + 47) / 95)
+exe 'vert 4resize ' . ((&columns * 124 + 182) / 365)
 exe '5resize ' . ((&lines * 41 + 47) / 95)
 exe 'vert 5resize ' . ((&columns * 122 + 182) / 365)
-exe '6resize ' . ((&lines * 45 + 47) / 95)
+exe '6resize ' . ((&lines * 49 + 47) / 95)
 exe 'vert 6resize ' . ((&columns * 122 + 182) / 365)
 argglobal
-let s:l = 1 - ((0 * winheight(0) + 43) / 87)
+let s:l = 1 - ((0 * winheight(0) + 45) / 91)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -84,7 +83,7 @@ lcd ~/cursus/red_tetris_boilerplate
 wincmd w
 argglobal
 if bufexists("~/cursus/red_tetris_boilerplate/.editorconfig") | buffer ~/cursus/red_tetris_boilerplate/.editorconfig | else | edit ~/cursus/red_tetris_boilerplate/.editorconfig | endif
-let s:l = 10 - ((9 * winheight(0) + 15) / 31)
+let s:l = 10 - ((9 * winheight(0) + 17) / 35)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -104,7 +103,7 @@ lcd ~/cursus/red_tetris_boilerplate
 wincmd w
 argglobal
 if bufexists("~/cursus/red_tetris_boilerplate/.eslintrc") | buffer ~/cursus/red_tetris_boilerplate/.eslintrc | else | edit ~/cursus/red_tetris_boilerplate/.eslintrc | endif
-let s:l = 276 - ((37 * winheight(0) + 22) / 45)
+let s:l = 276 - ((40 * winheight(0) + 24) / 49)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -112,17 +111,16 @@ normal! zt
 normal! 032|
 lcd ~/cursus/red_tetris_boilerplate
 wincmd w
-exe '1resize ' . ((&lines * 87 + 47) / 95)
 exe 'vert 1resize ' . ((&columns * 117 + 182) / 365)
 exe '2resize ' . ((&lines * 28 + 47) / 95)
-exe 'vert 2resize ' . ((&columns * 118 + 182) / 365)
+exe 'vert 2resize ' . ((&columns * 124 + 182) / 365)
 exe '3resize ' . ((&lines * 26 + 47) / 95)
-exe 'vert 3resize ' . ((&columns * 118 + 182) / 365)
-exe '4resize ' . ((&lines * 31 + 47) / 95)
-exe 'vert 4resize ' . ((&columns * 118 + 182) / 365)
+exe 'vert 3resize ' . ((&columns * 124 + 182) / 365)
+exe '4resize ' . ((&lines * 35 + 47) / 95)
+exe 'vert 4resize ' . ((&columns * 124 + 182) / 365)
 exe '5resize ' . ((&lines * 41 + 47) / 95)
 exe 'vert 5resize ' . ((&columns * 122 + 182) / 365)
-exe '6resize ' . ((&lines * 45 + 47) / 95)
+exe '6resize ' . ((&lines * 49 + 47) / 95)
 exe 'vert 6resize ' . ((&columns * 122 + 182) / 365)
 tabnext
 edit ~/cursus/red_tetris_boilerplate/src/server/main.js
@@ -158,9 +156,9 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 89 + 47) / 95)
+exe '1resize ' . ((&lines * 80 + 47) / 95)
 exe 'vert 1resize ' . ((&columns * 93 + 182) / 365)
-exe '2resize ' . ((&lines * 1 + 47) / 95)
+exe '2resize ' . ((&lines * 10 + 47) / 95)
 exe 'vert 2resize ' . ((&columns * 93 + 182) / 365)
 exe '3resize ' . ((&lines * 19 + 47) / 95)
 exe 'vert 3resize ' . ((&columns * 84 + 182) / 365)
@@ -175,7 +173,7 @@ exe 'vert 7resize ' . ((&columns * 92 + 182) / 365)
 exe '8resize ' . ((&lines * 45 + 47) / 95)
 exe 'vert 8resize ' . ((&columns * 92 + 182) / 365)
 argglobal
-let s:l = 54 - ((53 * winheight(0) + 44) / 89)
+let s:l = 54 - ((48 * winheight(0) + 40) / 80)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -185,7 +183,7 @@ lcd ~/cursus/red_tetris_boilerplate
 wincmd w
 argglobal
 if bufexists("~/cursus/red_tetris_boilerplate/src/server/index.js") | buffer ~/cursus/red_tetris_boilerplate/src/server/index.js | else | edit ~/cursus/red_tetris_boilerplate/src/server/index.js | endif
-let s:l = 18 - ((0 * winheight(0) + 0) / 1)
+let s:l = 18 - ((4 * winheight(0) + 5) / 10)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -230,16 +228,16 @@ if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 23
-normal! 02|
+normal! 0
 lcd ~/cursus/red_tetris_boilerplate
 wincmd w
 argglobal
 if bufexists("~/cursus/red_tetris_boilerplate/src/game/rules.js") | buffer ~/cursus/red_tetris_boilerplate/src/game/rules.js | else | edit ~/cursus/red_tetris_boilerplate/src/game/rules.js | endif
-let s:l = 80 - ((27 * winheight(0) + 22) / 45)
+let s:l = 74 - ((21 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-80
+74
 normal! 0
 lcd ~/cursus/red_tetris_boilerplate
 wincmd w
@@ -253,10 +251,9 @@ normal! zt
 normal! 0
 lcd ~/cursus/red_tetris_boilerplate
 wincmd w
-3wincmd w
-exe '1resize ' . ((&lines * 89 + 47) / 95)
+exe '1resize ' . ((&lines * 80 + 47) / 95)
 exe 'vert 1resize ' . ((&columns * 93 + 182) / 365)
-exe '2resize ' . ((&lines * 1 + 47) / 95)
+exe '2resize ' . ((&lines * 10 + 47) / 95)
 exe 'vert 2resize ' . ((&columns * 93 + 182) / 365)
 exe '3resize ' . ((&lines * 19 + 47) / 95)
 exe 'vert 3resize ' . ((&columns * 84 + 182) / 365)
@@ -310,24 +307,23 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 exe '1resize ' . ((&lines * 28 + 47) / 95)
-exe 'vert 1resize ' . ((&columns * 83 + 182) / 365)
+exe 'vert 1resize ' . ((&columns * 84 + 182) / 365)
 exe '2resize ' . ((&lines * 26 + 47) / 95)
-exe 'vert 2resize ' . ((&columns * 83 + 182) / 365)
-exe '3resize ' . ((&lines * 31 + 47) / 95)
-exe 'vert 3resize ' . ((&columns * 83 + 182) / 365)
+exe 'vert 2resize ' . ((&columns * 84 + 182) / 365)
+exe '3resize ' . ((&lines * 35 + 47) / 95)
+exe 'vert 3resize ' . ((&columns * 84 + 182) / 365)
 exe '4resize ' . ((&lines * 32 + 47) / 95)
-exe 'vert 4resize ' . ((&columns * 89 + 182) / 365)
-exe '5resize ' . ((&lines * 54 + 47) / 95)
-exe 'vert 5resize ' . ((&columns * 89 + 182) / 365)
+exe 'vert 4resize ' . ((&columns * 88 + 182) / 365)
+exe '5resize ' . ((&lines * 58 + 47) / 95)
+exe 'vert 5resize ' . ((&columns * 88 + 182) / 365)
 exe '6resize ' . ((&lines * 20 + 47) / 95)
-exe 'vert 6resize ' . ((&columns * 89 + 182) / 365)
+exe 'vert 6resize ' . ((&columns * 95 + 182) / 365)
 exe '7resize ' . ((&lines * 20 + 47) / 95)
-exe 'vert 7resize ' . ((&columns * 89 + 182) / 365)
+exe 'vert 7resize ' . ((&columns * 95 + 182) / 365)
 exe '8resize ' . ((&lines * 21 + 47) / 95)
-exe 'vert 8resize ' . ((&columns * 89 + 182) / 365)
-exe '9resize ' . ((&lines * 23 + 47) / 95)
-exe 'vert 9resize ' . ((&columns * 89 + 182) / 365)
-exe '10resize ' . ((&lines * 87 + 47) / 95)
+exe 'vert 8resize ' . ((&columns * 95 + 182) / 365)
+exe '9resize ' . ((&lines * 27 + 47) / 95)
+exe 'vert 9resize ' . ((&columns * 95 + 182) / 365)
 exe 'vert 10resize ' . ((&columns * 95 + 182) / 365)
 argglobal
 let s:l = 1 - ((0 * winheight(0) + 14) / 28)
@@ -350,7 +346,7 @@ lcd ~/cursus/red_tetris_boilerplate
 wincmd w
 argglobal
 if bufexists("~/cursus/red_tetris_boilerplate/index.html") | buffer ~/cursus/red_tetris_boilerplate/index.html | else | edit ~/cursus/red_tetris_boilerplate/index.html | endif
-let s:l = 1 - ((0 * winheight(0) + 15) / 31)
+let s:l = 1 - ((0 * winheight(0) + 17) / 35)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -370,7 +366,7 @@ lcd ~/cursus/red_tetris_boilerplate
 wincmd w
 argglobal
 if bufexists("~/cursus/red_tetris_boilerplate/src/client/containers/app.js") | buffer ~/cursus/red_tetris_boilerplate/src/client/containers/app.js | else | edit ~/cursus/red_tetris_boilerplate/src/client/containers/app.js | endif
-let s:l = 24 - ((22 * winheight(0) + 27) / 54)
+let s:l = 24 - ((23 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -410,7 +406,7 @@ lcd ~/cursus/red_tetris_boilerplate
 wincmd w
 argglobal
 if bufexists("~/cursus/red_tetris_boilerplate/src/client/reducers/rooms.js") | buffer ~/cursus/red_tetris_boilerplate/src/client/reducers/rooms.js | else | edit ~/cursus/red_tetris_boilerplate/src/client/reducers/rooms.js | endif
-let s:l = 1 - ((0 * winheight(0) + 11) / 23)
+let s:l = 1 - ((0 * winheight(0) + 13) / 27)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -420,7 +416,7 @@ lcd ~/cursus/red_tetris_boilerplate
 wincmd w
 argglobal
 if bufexists("~/cursus/red_tetris_boilerplate/src/client/middleware/socket.js") | buffer ~/cursus/red_tetris_boilerplate/src/client/middleware/socket.js | else | edit ~/cursus/red_tetris_boilerplate/src/client/middleware/socket.js | endif
-let s:l = 50 - ((47 * winheight(0) + 43) / 87)
+let s:l = 50 - ((49 * winheight(0) + 45) / 91)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -428,25 +424,25 @@ normal! zt
 normal! 0
 lcd ~/cursus/red_tetris_boilerplate
 wincmd w
+10wincmd w
 exe '1resize ' . ((&lines * 28 + 47) / 95)
-exe 'vert 1resize ' . ((&columns * 83 + 182) / 365)
+exe 'vert 1resize ' . ((&columns * 84 + 182) / 365)
 exe '2resize ' . ((&lines * 26 + 47) / 95)
-exe 'vert 2resize ' . ((&columns * 83 + 182) / 365)
-exe '3resize ' . ((&lines * 31 + 47) / 95)
-exe 'vert 3resize ' . ((&columns * 83 + 182) / 365)
+exe 'vert 2resize ' . ((&columns * 84 + 182) / 365)
+exe '3resize ' . ((&lines * 35 + 47) / 95)
+exe 'vert 3resize ' . ((&columns * 84 + 182) / 365)
 exe '4resize ' . ((&lines * 32 + 47) / 95)
-exe 'vert 4resize ' . ((&columns * 89 + 182) / 365)
-exe '5resize ' . ((&lines * 54 + 47) / 95)
-exe 'vert 5resize ' . ((&columns * 89 + 182) / 365)
+exe 'vert 4resize ' . ((&columns * 88 + 182) / 365)
+exe '5resize ' . ((&lines * 58 + 47) / 95)
+exe 'vert 5resize ' . ((&columns * 88 + 182) / 365)
 exe '6resize ' . ((&lines * 20 + 47) / 95)
-exe 'vert 6resize ' . ((&columns * 89 + 182) / 365)
+exe 'vert 6resize ' . ((&columns * 95 + 182) / 365)
 exe '7resize ' . ((&lines * 20 + 47) / 95)
-exe 'vert 7resize ' . ((&columns * 89 + 182) / 365)
+exe 'vert 7resize ' . ((&columns * 95 + 182) / 365)
 exe '8resize ' . ((&lines * 21 + 47) / 95)
-exe 'vert 8resize ' . ((&columns * 89 + 182) / 365)
-exe '9resize ' . ((&lines * 23 + 47) / 95)
-exe 'vert 9resize ' . ((&columns * 89 + 182) / 365)
-exe '10resize ' . ((&lines * 87 + 47) / 95)
+exe 'vert 8resize ' . ((&columns * 95 + 182) / 365)
+exe '9resize ' . ((&lines * 27 + 47) / 95)
+exe 'vert 9resize ' . ((&columns * 95 + 182) / 365)
 exe 'vert 10resize ' . ((&columns * 95 + 182) / 365)
 tabnext
 edit ~/cursus/red_tetris_boilerplate/src/client/actions/game.js
@@ -482,24 +478,24 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 1 + 47) / 95)
+exe '1resize ' . ((&lines * 10 + 47) / 95)
 exe 'vert 1resize ' . ((&columns * 90 + 182) / 365)
-exe '2resize ' . ((&lines * 85 + 47) / 95)
+exe '2resize ' . ((&lines * 80 + 47) / 95)
 exe 'vert 2resize ' . ((&columns * 90 + 182) / 365)
-exe '3resize ' . ((&lines * 9 + 47) / 95)
+exe '3resize ' . ((&lines * 13 + 47) / 95)
 exe 'vert 3resize ' . ((&columns * 83 + 182) / 365)
 exe '4resize ' . ((&lines * 77 + 47) / 95)
 exe 'vert 4resize ' . ((&columns * 83 + 182) / 365)
-exe '5resize ' . ((&lines * 41 + 47) / 95)
-exe 'vert 5resize ' . ((&columns * 89 + 182) / 365)
+exe '5resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 5resize ' . ((&columns * 95 + 182) / 365)
 exe '6resize ' . ((&lines * 45 + 47) / 95)
-exe 'vert 6resize ' . ((&columns * 89 + 182) / 365)
-exe '7resize ' . ((&lines * 41 + 47) / 95)
+exe 'vert 6resize ' . ((&columns * 95 + 182) / 365)
+exe '7resize ' . ((&lines * 45 + 47) / 95)
 exe 'vert 7resize ' . ((&columns * 94 + 182) / 365)
 exe '8resize ' . ((&lines * 45 + 47) / 95)
 exe 'vert 8resize ' . ((&columns * 94 + 182) / 365)
 argglobal
-let s:l = 5 - ((0 * winheight(0) + 0) / 1)
+let s:l = 5 - ((4 * winheight(0) + 5) / 10)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -509,7 +505,7 @@ lcd ~/cursus/red_tetris_boilerplate
 wincmd w
 argglobal
 if bufexists("~/cursus/red_tetris_boilerplate/src/client/reducers/game.js") | buffer ~/cursus/red_tetris_boilerplate/src/client/reducers/game.js | else | edit ~/cursus/red_tetris_boilerplate/src/client/reducers/game.js | endif
-let s:l = 31 - ((29 * winheight(0) + 42) / 85)
+let s:l = 31 - ((27 * winheight(0) + 40) / 80)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -519,22 +515,22 @@ lcd ~/cursus/red_tetris_boilerplate
 wincmd w
 argglobal
 if bufexists("~/cursus/red_tetris_boilerplate/src/client/containers/game.js") | buffer ~/cursus/red_tetris_boilerplate/src/client/containers/game.js | else | edit ~/cursus/red_tetris_boilerplate/src/client/containers/game.js | endif
-let s:l = 48 - ((4 * winheight(0) + 4) / 9)
+let s:l = 48 - ((6 * winheight(0) + 6) / 13)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 48
-let s:c = 70 - ((62 * winwidth(0) + 41) / 83)
+let s:c = 12 - ((4 * winwidth(0) + 41) / 83)
 if s:c > 0
-  exe 'normal! ' . s:c . '|zs' . 70 . '|'
+  exe 'normal! ' . s:c . '|zs' . 12 . '|'
 else
-  normal! 070|
+  normal! 012|
 endif
 lcd ~/cursus/red_tetris_boilerplate
 wincmd w
 argglobal
 if bufexists("~/cursus/red_tetris_boilerplate/src/client/components/board.js") | buffer ~/cursus/red_tetris_boilerplate/src/client/components/board.js | else | edit ~/cursus/red_tetris_boilerplate/src/client/components/board.js | endif
-let s:l = 22 - ((20 * winheight(0) + 38) / 77)
+let s:l = 22 - ((21 * winheight(0) + 38) / 77)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -544,7 +540,7 @@ lcd ~/cursus/red_tetris_boilerplate
 wincmd w
 argglobal
 if bufexists("~/cursus/red_tetris_boilerplate/src/client/components/form.js") | buffer ~/cursus/red_tetris_boilerplate/src/client/components/form.js | else | edit ~/cursus/red_tetris_boilerplate/src/client/components/form.js | endif
-let s:l = 16 - ((14 * winheight(0) + 20) / 41)
+let s:l = 16 - ((15 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -564,7 +560,7 @@ lcd ~/cursus/red_tetris_boilerplate
 wincmd w
 argglobal
 if bufexists("~/cursus/red_tetris_boilerplate/style.css") | buffer ~/cursus/red_tetris_boilerplate/style.css | else | edit ~/cursus/red_tetris_boilerplate/style.css | endif
-let s:l = 4 - ((3 * winheight(0) + 20) / 41)
+let s:l = 4 - ((3 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -582,23 +578,23 @@ normal! zt
 normal! 0
 lcd ~/cursus/red_tetris_boilerplate
 wincmd w
-exe '1resize ' . ((&lines * 1 + 47) / 95)
+exe '1resize ' . ((&lines * 10 + 47) / 95)
 exe 'vert 1resize ' . ((&columns * 90 + 182) / 365)
-exe '2resize ' . ((&lines * 85 + 47) / 95)
+exe '2resize ' . ((&lines * 80 + 47) / 95)
 exe 'vert 2resize ' . ((&columns * 90 + 182) / 365)
-exe '3resize ' . ((&lines * 9 + 47) / 95)
+exe '3resize ' . ((&lines * 13 + 47) / 95)
 exe 'vert 3resize ' . ((&columns * 83 + 182) / 365)
 exe '4resize ' . ((&lines * 77 + 47) / 95)
 exe 'vert 4resize ' . ((&columns * 83 + 182) / 365)
-exe '5resize ' . ((&lines * 41 + 47) / 95)
-exe 'vert 5resize ' . ((&columns * 89 + 182) / 365)
+exe '5resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 5resize ' . ((&columns * 95 + 182) / 365)
 exe '6resize ' . ((&lines * 45 + 47) / 95)
-exe 'vert 6resize ' . ((&columns * 89 + 182) / 365)
-exe '7resize ' . ((&lines * 41 + 47) / 95)
+exe 'vert 6resize ' . ((&columns * 95 + 182) / 365)
+exe '7resize ' . ((&lines * 45 + 47) / 95)
 exe 'vert 7resize ' . ((&columns * 94 + 182) / 365)
 exe '8resize ' . ((&lines * 45 + 47) / 95)
 exe 'vert 8resize ' . ((&columns * 94 + 182) / 365)
-tabnext 2
+tabnext 3
 badd +1 ~/cursus/red_tetris_boilerplate/package.json
 badd +1 ~/cursus/red_tetris/README.md
 badd +1 ~/cursus/red_tetris_boilerplate/src/server/main.js
@@ -610,8 +606,8 @@ badd +1 ~/cursus/red_tetris_boilerplate/.editorconfig
 badd +1 ~/cursus/red_tetris_boilerplate/README.md
 badd +1 ~/cursus/red_tetris_boilerplate/.eslintrc
 badd +1 ~/cursus/red_tetris_boilerplate/src/server/index.js
-badd +1 ~/cursus/red_tetris_boilerplate/src/game/board.js
-badd +0 ~/cursus/red_tetris_boilerplate/src/server/game.js
+badd +0 ~/cursus/red_tetris_boilerplate/src/game/board.js
+badd +1 ~/cursus/red_tetris_boilerplate/src/server/game.js
 badd +1 ~/cursus/red_tetris_boilerplate/src/game/piece.js
 badd +1 ~/cursus/red_tetris_boilerplate/src/server/player.js
 badd +1 ~/cursus/red_tetris_boilerplate/src/game/rules.js
@@ -674,6 +670,7 @@ if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)
 endif
 let &so = s:so_save | let &siso = s:siso_save
+nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

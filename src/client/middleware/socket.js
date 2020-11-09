@@ -36,17 +36,14 @@ const Socket = (url) => store => {
   });
 
   socket.on('action', (action) => {
-    console.log('ACTION FROM SERVER =>', action);
     store.dispatch(action);
   });
 
   socket.on('move', (action) => {
-    console.log('MOVE FROM SERVER =>', action);
     store.dispatch(action);
   });
 
   socket.on('fact', (action) => {
-    console.log('FACT FROM SERVER =>', action);
     store.dispatch(action);
   });
 

@@ -18,7 +18,6 @@ const Board = ({ player, game }) => {
 
   const piece = player.pieces[0];
   const buffer = game.rules.pieces[game.pieces[player.nbPiecesLanded].id];
-  console.log(piece);
 
   const b2 = board.buffer.map((line, y) => line.map((cell, x) => {
     const relx = x - piece.x;
@@ -33,7 +32,8 @@ const Board = ({ player, game }) => {
   }));
 
   return (
-    <div className='board'>
+    <div className={`board ${(player.loose) ? 'loose' : ''}`} >
+      {(player.loose) ? 'You Loose' : ''}
     ID {player.id}
     USERNAME {player.username}
     SCORE {player.score}

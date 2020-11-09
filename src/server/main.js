@@ -92,7 +92,6 @@ const file = req.url === '/bundle.js' ?
 /* - SOCKET ROUTER --------------------------------------------------------*/
 
 const ROOMS = [];
-const USERS = [];
 
 function getRoomInfo(room) {
   return {
@@ -118,7 +117,7 @@ const reducer = (user, action) => { // RENAME INTO ROUTER !! ??
       gridx: 10,
       gridy: 20,
       tickDuration: 100,
-      heatRoomTime: 100,
+      heatRoomTime: 1000,
       maxPlayer: 2,
       allowSpectator: true,
     }
@@ -184,7 +183,6 @@ socketio.on('connection', (socket) => {
   console.log(`Socket connected: ${socket.id}`)
 
   const user = new Player(socket, 'jean')
-  USERS.push(user);
 
   socket.emit('connected', { idPlayer: socket.id })
 
@@ -197,8 +195,6 @@ socketio.on('connection', (socket) => {
     console.log(`Socket disconnected: ${ socket.id}`)
 
     // DISCONNECT FROM ALL ROOM
-    const i = USERS.indexOf(user);
-    USERS.splice(i, 1);
   });
 })
 

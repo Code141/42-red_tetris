@@ -21,9 +21,10 @@ const Game = ({ game, leaveRoom, startGame, move }) => {
   let boards = '';
 
   if (game.gameHasStarted) {
-    boards = game.players.map((player) => (
+    boards = game.players.map((player, index) => (
       <Board
         game={game}
+        key={index}
         player={player}
       />
     ));

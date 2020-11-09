@@ -16,6 +16,14 @@ class Board {
     }
   }
 
+  clear() {
+    for (let y = 0, l = this.height; y < l; y++) {
+      for (let x = 0, ll = this.width; x < ll; x++) {
+        this.buffer[y][x] = 0;
+      }
+    }
+  }
+
   deleteLines(linesToDelete) {
     linesToDelete.forEach((lineNb) => {
       this.buffer.splice(lineNb, 1);
@@ -38,6 +46,45 @@ class Board {
         line[i] = 0;
       }
       */
+  }
+
+  mergePiece(piece) {
+    const pieceBuffer = piece.buffer;
+    const l = piece.height;
+    const ll = piece.width;
+    let y = 0;
+    let x = 0;
+
+    while (y < l) {
+      while (x < ll) {
+        if (pieceBuffer[y][x] !== 0) {
+          this.buffer[piece.y + y][piece.x + x] = pieceBuffer[y][x];
+        }
+        x++;
+      }
+      x = 0;
+      y++;
+    }
+  }
+
+  checkLine() {
+    const lines = [];
+    let y = 0;
+    let x = 0;
+
+    while (y < this.height) {
+      while (x < this.width &&
+        this.buffer[y][x] !== 0 &&
+        this.buffer[y][x] !== 255) {
+        x++;
+      }
+      if (x === this.width) {
+        lines.push(y);
+      }
+      x = 0;
+      y++;
+    }
+    return lines;
   }
 }
 
