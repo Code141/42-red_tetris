@@ -7,6 +7,7 @@ class Player extends EventEmitter {
     super();
 
     this.id = crypto.randomBytes(3).toString('hex');
+    this.id_player = undefined;
     this.socket = socket;
     this.username = username;
     this.room = null;
@@ -23,12 +24,20 @@ class Player extends EventEmitter {
 
       if (action.payload === 'strafeLeft' &&
         strafeLeft(this.board, this.pieces[0])) {
-        this.socket.emit('move', { type: action.payload });
+
+        this.room.broadcast('action', { type: 'STRAFE_LEFT', payload: {
+          id_player: this.id_player,
+        },
+        });
       }
 
       if (action.payload === 'strafeRight' &&
         strafeRight(this.board, this.pieces[0])) {
-        this.socket.emit('move', { type: action.payload });
+        this.room.broadcast('action', { type: 'STRAFE_RIGHT', payload:
+          {
+            id_player: this.id_player,
+          },
+        });
       }
     });
   }

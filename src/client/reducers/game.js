@@ -5,6 +5,8 @@ import {
   NEXT_TICK,
   NEXT_PIECE,
   LOOSE,
+  STRAFE_LEFT,
+  STRAFE_RIGHT,
 } from '../actions/game'
 
 const game = {
@@ -17,7 +19,7 @@ const game = {
 };
 
 const reducer = (state = game, action) => {
-  let players;
+  let players, id_player;
 
   switch (action.type) {
 
@@ -77,14 +79,43 @@ const reducer = (state = game, action) => {
       ],
     };
 
-    /*
   case STRAFE_LEFT:
+    id_player = action.payload.id_player;
     return {
       ...state,
-      tick: action.payload.tick,
-      boards: action.payload.boards,
+      players: state.players.map((player, id) => {
+        if (id !== id_player) { return { ...player } }
+        return {
+          ...player,
+          pieces: player.pieces.map((piece, indexPiece) => {
+            if (indexPiece !== 0) { return { ...piece } }
+            return {
+              ...piece,
+              x: piece.x - 1,
+            }
+          }),
+        }
+      }),
     };
-    */
+
+  case STRAFE_RIGHT:
+    id_player = action.payload.id_player;
+    return {
+      ...state,
+      players: state.players.map((player, id) => {
+        if (id !== id_player) { return { ...player } }
+        return {
+          ...player,
+          pieces: player.pieces.map((piece, indexPiece) => {
+            if (indexPiece !== 0) { return { ...piece } }
+            return {
+              ...piece,
+              x: piece.x + 1,
+            }
+          }),
+        }
+      }),
+    };
   default:
     return state
   }

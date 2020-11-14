@@ -116,7 +116,7 @@ const reducer = (user, action) => { // RENAME INTO ROUTER !! ??
     const defaults_opts = {
       gridx: 10,
       gridy: 20,
-      tickDuration: 100,
+      tickDuration: 2000,
       heatRoomTime: 1000,
       maxPlayer: 2,
       allowSpectator: true,

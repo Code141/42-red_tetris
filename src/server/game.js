@@ -24,6 +24,11 @@ class Game {
 
   startGame() {
     console.log('START GAME')
+
+    this.players.forEach((player, id) => {
+      player.id_player = id;
+    });
+
     if (this.gameHasStarted) { return; }
     this.gameHasStarted = true;
     this.round++;

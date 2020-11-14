@@ -39,10 +39,6 @@ const Socket = (url) => store => {
     store.dispatch(action);
   });
 
-  socket.on('move', (action) => {
-    store.dispatch(action);
-  });
-
   socket.on('fact', (action) => {
     store.dispatch(action);
   });
