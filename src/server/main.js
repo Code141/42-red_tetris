@@ -116,7 +116,7 @@ const reducer = (user, action) => { // RENAME INTO ROUTER !! ??
     const defaults_opts = {
       gridx: 10,
       gridy: 20,
-      tickDuration: 2000,
+      tickDuration: 100,
       heatRoomTime: 1000,
       maxPlayer: 2,
       allowSpectator: true,
@@ -165,8 +165,15 @@ const reducer = (user, action) => { // RENAME INTO ROUTER !! ??
 
   case 'GET_ROOM_LIST':
     user.socket.emit('action', { type: 'ROOM_LIST', payload: getRoomList() })
-    console.log(getRoomList());
-    console.log('GET_ROOM_LIST');
+    console.log('Rooms ------------')
+    let totalRooms = 0;
+    let totalPlayers = 0;
+    ROOMS.forEach((room) => {
+      console.log(`ROOM ${room.id} | ${room.players.length} players`)
+      totalPlayers = totalPlayers + room.players.length;
+      totalRooms = totalRooms + 1;
+    });
+    console.log(`TOTAL - ${totalRooms} rooms -- ${totalPlayers} players`)
     break;
 
   default:

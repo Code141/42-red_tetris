@@ -15,8 +15,8 @@ const AdminPanel = ({ startGame }) => (
 
 const Game = ({ game, leaveRoom, startGame, move }) => {
 
-  useKeyboardEvent('ArrowLeft', () => { move('strafeLeft') });
-  useKeyboardEvent('ArrowRight', () => { move('strafeRight') });
+  useKeyboardEvent('ArrowLeft', () => { move('STRAFE_LEFT') });
+  useKeyboardEvent('ArrowRight', () => { move('STRAFE_RIGHT') });
 
   let boards = '';
 

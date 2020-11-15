@@ -22,16 +22,15 @@ class Player extends EventEmitter {
 
     this.socket.on('move', (action) => {
 
-      if (action.payload === 'strafeLeft' &&
+      if (action.payload === 'STRAFE_LEFT' &&
         strafeLeft(this.board, this.pieces[0])) {
-
         this.room.broadcast('action', { type: 'STRAFE_LEFT', payload: {
           id_player: this.id_player,
         },
         });
       }
 
-      if (action.payload === 'strafeRight' &&
+      if (action.payload === 'STRAFE_RIGHT' &&
         strafeRight(this.board, this.pieces[0])) {
         this.room.broadcast('action', { type: 'STRAFE_RIGHT', payload:
           {
@@ -108,7 +107,7 @@ class Player extends EventEmitter {
       score: this.score,
       loose: this.loose,
       nbPiecesLanded: this.nbPiecesLanded,
-      pieces: this.pieces.map((piece) => ({
+      pieces: this.pieces.map(piece => ({
         id: piece.id,
         x: piece.x,
         y: piece.y,

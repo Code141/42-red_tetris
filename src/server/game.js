@@ -5,13 +5,14 @@ import Piece from '../game/piece'
 import Board from '../game/board'
 
 class Game {
-  constructor(opts, user) {
+  constructor(opts, admin) {
     this.id = crypto.randomBytes(3).toString('hex');
-    this.admin = user;
+    this.admin = admin;
     this.spectators = [];
     this.players = [];
     this.pieces = [];
 
+    // this.rules = (rules) ? rules : default_rules;
     this.rules = default_rules; // PARSE USER RULES HERE
 
     this.gameHasStarted = false;
@@ -25,17 +26,14 @@ class Game {
   startGame() {
     console.log('START GAME')
 
-    this.players.forEach((player, id) => {
-      player.id_player = id;
-    });
-
     if (this.gameHasStarted) { return; }
     this.gameHasStarted = true;
     this.round++;
 
     this.tick = 0;
     this.pieces = [];
-    this.players.forEach(player => {
+    this.players.forEach((player, id) => {
+      player.id_player = id;
       player.loose = false;
       player.board.clear();
       player.pieces = [];
@@ -48,6 +46,7 @@ class Game {
     this.servePiece();
     this.servePiece();
     */
+
     this.broadcast('action', { type: 'GAME_STATUS', payload:
       this.info(),
     });
@@ -158,7 +157,9 @@ class Game {
     user.board = new Board(this.rules.board.width, this.rules.board.height);
     user.room = this;
 
-    // user.socket.join(this.id); FOR BROADCAST
+    /*
+    user.socket.join(this.id); // FOR BROADCAST
+    */
 
     user.socket.emit('action', { type: 'ROOM_JOINTED', payload:
       this.info(),
