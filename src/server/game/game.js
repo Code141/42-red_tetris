@@ -1,18 +1,19 @@
 import crypto from 'crypto'
+import EventEmitter from 'events'
 import Player from './player.js'
 import Piece from './piece.js'
 import Board from './board.js'
 
-class Game {
-  constructor(rules, admin) {
+class Game extends EventEmitter {
+  constructor(rules, user, socketio) {
+    super();
+    this.socketio = socketio;
     this.id = crypto.randomBytes(3).toString('hex');
-    this.admin = admin;
     this.spectators = [];
     this.players = [];
     this.pieces = [];
 
     // this.rules = (rules) ? rules : default_rules;
-    console.log(rules);
     this.rules = rules; // PARSE USER RULES HERE
 
     this.gameHasStarted = false;
@@ -21,6 +22,9 @@ class Game {
 
     this.tick = 0;
     this.round = 0;
+
+    this.admin = user;
+    this.addPlayer(user);
   }
 
   startGame() {
@@ -77,7 +81,6 @@ class Game {
     setTimeout(() => {
       this.startGame();
     }, 1000)
-
   }
 
   closeGame() {
@@ -87,12 +90,15 @@ class Game {
   }
 
   broadcast(actionName, payload) {
+    this.socketio.to(this.id).emit(actionName, payload);
+    /*
     this.players.forEach((player, index) => {
       player.socket.emit(actionName, payload);
     });
     this.spectators.forEach((spectator, index) => {
       spectator.socket.emit(actionName, payload);
     });
+    */
   }
 
   generateNewPiece() {
@@ -157,9 +163,7 @@ class Game {
     user.board = new Board(this.rules.board.width, this.rules.board.height);
     user.room = this;
 
-    /*
     user.socket.join(this.id); // FOR BROADCAST
-    */
 
     user.socket.emit('action', { type: 'ROOM_JOINTED', payload:
       this.info(),
@@ -170,20 +174,24 @@ class Game {
   removePlayer(user) {
     if (this.players.find(player => player === user)) {
       this.players.splice(this.players.indexOf(user), 1);
+      user.socket.leave(this.id);
       user.leaveRoom();
-    }
 
-    /*
-    player.socket.leave(this.id);
-    this.players.destroy();
-    */
-    //  this.players = {}
-
-    /*
       if (this.players.length === 0){
-        this.emit('autodestruct')
-        }
-        */
+        this.emit('autodestruct');
+        return;
+      }
+
+      if (this.admin === user) {
+        this.admin = this.players[0];
+        // BROADCAST WHO IS NEW ADMIN
+      }
+    }
+  }
+
+  autodestruct(){
+    this.players.forEach(player => this.removePlayer(player));
+    // this.spectator.forEach(spectator => this.removeSpectator(spectator));
   }
 
   info() {

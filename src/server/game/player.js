@@ -1,6 +1,6 @@
 import crypto from 'crypto'
-import { moveDown, strafeLeft, strafeRight, checkCollision } from './rules.js'
 import EventEmitter from 'events'
+import { moveDown, strafeLeft, strafeRight, checkCollision } from './rules.js'
 
 class Player extends EventEmitter {
   constructor(socket, username) {
@@ -21,6 +21,8 @@ class Player extends EventEmitter {
     this.board = undefined;
 
     this.socket.on('move', (action) => {
+      if (!this.room || !this.room.gameHasStarted)
+        return;
 
       if (action.payload === 'STRAFE_LEFT' &&
         strafeLeft(this.board, this.pieces[0])) {

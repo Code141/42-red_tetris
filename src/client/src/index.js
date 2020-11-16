@@ -1,15 +1,17 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 
-
 import { createStore, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux'
+
 import rootReducer from './reducers'
+
 import Socket from './middleware/socket';
-import { BrowserRouter as Router } from 'react-router-dom';
-import history from './hooks/history';
 
 import App from './containers/app'
+
+import history from './hooks/history';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import './css/reset.css'
 import './css/style.css'

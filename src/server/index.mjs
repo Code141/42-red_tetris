@@ -1,8 +1,6 @@
 'use strict';
-
 import fs from 'fs'
 import http from 'http'
-
 
 import Koa from 'koa'
 import Router from 'koa-router'
@@ -84,11 +82,6 @@ app
   .use(router.allowedMethods())
   .listen(server_port);
 
-/*
-const file = req.url === '/bundle.js' ?
-'/../../build/bundle.js' :
-'/../../index.html'
-*/
 
 /* ------------------------------------------------------------------------*/
 /* - SOCKET ---------------------------------------------------------------*/
@@ -116,90 +109,98 @@ function getRoomList() {
 const reducer = (user, action) => { // RENAME INTO ROUTER !! ??
   switch (action.type) {
 
-  case 'CREATE_ROOM':
-    // check users right to creating room
-     
-    console.log(default_rules);
-    const room = new Game(default_rules, user)
-    ROOMS.push(room);
+    case 'CREATE_ROOM':
+      // check users right to creating room
+      if (user.room && user.room.admin === user) {
+        console.log("YOU CANNOT BE ADMIN OF TWO ROOM");
+        return;
+      }
+      const room = new Game(default_rules, user, socketio)
+      room.on('autodestruct', () => {
+        console.log('WE ARE GOING TO AUTODESTRUCT');
+        room.autodestruct();
 
-    // room.addPlayer(user)
-    user.socket.emit('action', { type: 'ROOM_CREATED', payload: getRoomInfo(room) });
-    user.socket.broadcast.emit('action', { type: 'ROOM_CREATED', payload: getRoomInfo(room) });
+        if (ROOMS.find(someroom => someroom === room)) {
+          ROOMS.splice(ROOMS.indexOf(room), 1);
+        };
+      });
 
-    // OBSOLETE ACTION'S PAYLOAD
-    // user.socket.emit('action', { type: 'ROOM_JOINTED', payload: room.id })
-    console.log(`room_created: ${room.id}`);
-    break;
+        ROOMS.push(room);
 
-  case 'JOINT_ROOM':
+        // room.addPlayer(user)
+        user.socket.emit('action', { type: 'ROOM_CREATED', payload: getRoomInfo(room) });
+        user.socket.broadcast.emit('action', { type: 'ROOM_CREATED', payload: getRoomInfo(room) });
 
-    console.log('JOINT_ROOM', action);
-    const room_to_join = ROOMS.find(room => room.id === action.payload);
-    if (!room_to_join) {
-      user.socket.emit('action', { type: 'ERROR', payload: 'room_doesn\'t existe' })
-      return;
-    }
+        // OBSOLETE ACTION'S PAYLOAD
+        // user.socket.emit('action', { type: 'ROOM_JOINTED', payload: room.id })
+        console.log(`room_created: ${room.id}`);
+        break;
 
-    // THIS USER TRY TO JOIN ROOM
-    // CHECK ABILITY TO JOIN ROOM
+        case 'JOINT_ROOM':
+          console.log('JOINT_ROOM', action);
+          const room_to_join = ROOMS.find(room => room.id === action.payload);
+          if (!room_to_join) {
+            user.socket.emit('action', { type: 'ERROR', payload: 'room_doesn\'t existe' })
+            return;
+          }
 
-    if (room_to_join.addPlayer(user)) {
+          // THIS USER TRY TO JOIN ROOM
+          // CHECK ABILITY TO JOIN ROOM
 
-      user.socket.broadcast.emit('action', { type: 'ROOM_LIST', payload: getRoomList() })
-    }
-    break;
+          if (room_to_join.addPlayer(user)) {
+            user.socket.broadcast.emit('action', { type: 'ROOM_LIST', payload: getRoomList() })
+          }
+        break;
 
-  case 'LEAVE_ROOM':
-    user.leaveRoom();
+        case 'LEAVE_ROOM':
+          user.leaveRoom();
+          user.socket.emit('action', { type: 'ROOM_LEAVED', payload: '' })
+        break;
 
-    user.socket.emit('action', { type: 'ROOM_LEAVED', payload: '' })
-    break;
+        case 'START_GAME':
+          if (user.room.admin !== user) { return; } // FAIL MUST CHECK BETTER
+            user.room.startGame();
+        break;
 
-  case 'START_GAME':
-    if (user.room.admin !== user) { return; } // FAIL MUST CHECK BETTER
-    user.room.startGame();
-    break;
+        case 'GET_ROOM_LIST':
+          user.socket.emit('action', { type: 'ROOM_LIST', payload: getRoomList() })
+          console.log('Rooms ------------')
+          let totalRooms = 0;
+          let totalPlayers = 0;
+          ROOMS.forEach((room) => {
+            console.log(`ROOM ${room.id} | ${room.players.length} players | round ${room.round} | tick ${room.tick}`)
+            totalPlayers = totalPlayers + room.players.length;
+            totalRooms = totalRooms + 1;
+          });
+          console.log(`TOTAL - ${totalRooms} rooms -- ${totalPlayers} players`)
+        break;
 
-  case 'GET_ROOM_LIST':
-    user.socket.emit('action', { type: 'ROOM_LIST', payload: getRoomList() })
-    console.log('Rooms ------------')
-    let totalRooms = 0;
-    let totalPlayers = 0;
-    ROOMS.forEach((room) => {
-      console.log(`ROOM ${room.id} | ${room.players.length} players | round ${room.round} | tick ${room.tick}`)
-      totalPlayers = totalPlayers + room.players.length;
-      totalRooms = totalRooms + 1;
-    });
-    console.log(`TOTAL - ${totalRooms} rooms -- ${totalPlayers} players`)
-    break;
-
-  default:
-    console.log('WARNING UNKNOW ACTION');
+        default:
+        console.log('WARNING UNKNOW ACTION');
+      }
   }
-}
 
-/* - SOCKET CREATE --------------------------------------------------------*/
-const server = http.createServer();
-server.listen(socket_port);
-const socketio = io(server, { origins: '*:*' });
+  /* - SOCKET CREATE --------------------------------------------------------*/
+  const server = http.createServer();
+  server.listen(socket_port);
+  const socketio = io(server, { origins: '*:*' });
 
-socketio.on('connection', (socket) => {
-  console.log(`Socket connected: ${socket.id}`)
+  socketio.on('connection', (socket) => {
+    console.log(`Socket connected: ${socket.id}`)
 
-  const user = new Player(socket, 'jean')
+    const user = new Player(socket, 'jean')
 
-  socket.emit('connected', { idPlayer: socket.id })
+    socket.emit('connected', { idPlayer: socket.id })
 
-  socket.on('action', (action) => {
-    console.log(` ${colorise('ACTION', 'FgRed')} ${colorise(action.type, 'FgGreen')} ${colorise('FROM', 'FgRed')} ${user.id} ${user.username} `);
-    reducer(user, action);
+    socket.on('action', (action) => {
+      console.log(` ${colorise('ACTION', 'FgRed')} ${colorise(action.type, 'FgGreen')} ${colorise('FROM', 'FgRed')} ${user.id} ${user.username} `);
+      reducer(user, action);
+    })
+
+    socket.on('disconnect', () => {
+      console.log(`Socket disconnected: ${ socket.id}`)
+      user.leaveRoom();
+      // DISCONNECT FROM ALL ROOM
+    });
   })
-
-  socket.on('disconnect', () => {
-    console.log(`Socket disconnected: ${ socket.id}`)
-
-    // DISCONNECT FROM ALL ROOM
-  });
-})
 

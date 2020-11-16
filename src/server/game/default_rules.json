@@ -1,6 +1,6 @@
 {
-  "tickDuration": 100,
-  "heatRoomTime": 1000,
+  "tickDuration": 150,
+  "heatRoomTime": 2000,
   "maxPlayer": 2,
   "allowSpectator": true,
   "board": {

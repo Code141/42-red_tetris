@@ -23,6 +23,7 @@ class Piece {
       rotation: this.rotation,
     });
   }
+
   rotateClockwise() {
     this.rotation = this.rotation + (this.rotation + 1) % 4;
   }

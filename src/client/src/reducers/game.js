@@ -1,7 +1,7 @@
 import {
   GAME_STATUS,
   ROOM_JOINTED,
-  LEAVE_ROOM,
+  ROOM_LEAVED,
   NEXT_TICK,
   NEXT_PIECE,
   LOOSE,
@@ -51,7 +51,7 @@ const reducer = (state = game, action) => {
       rules: action.payload.rules,
     };
 
-  case LEAVE_ROOM:
+  case ROOM_LEAVED:
     return game;
 
   case NEXT_TICK:

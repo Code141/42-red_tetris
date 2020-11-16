@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import useKeyboardEvent from '../hooks/keyboard'
 import Board from '../components/board'
@@ -32,6 +33,10 @@ const Game = ({ game, leaveRoom, startGame, move }) => {
 
   return (
     <div className='wrap'>
+      <Link to='/' onClick={ () => leaveRoom('PAYLOAD/roomId?') }>
+        LEAVE GAME !
+      </Link>
+
       gameID: {game.id}
       <br />
       admin: {game.admin}
@@ -52,9 +57,6 @@ const Game = ({ game, leaveRoom, startGame, move }) => {
       <br />
       { game.spectators.map((spectator) => (`${spectator.id}: ${spectator.username}`)) }
 
-      <button onClick={ () => leaveRoom('PAYLOAD/roomId?') }>
-        LEAVE_ROOM
-      </button>
 
       <hr />
 
