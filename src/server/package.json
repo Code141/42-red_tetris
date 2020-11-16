@@ -1,0 +1,17 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --experimental-json-modules --experimental-modules index.mjs"
+  },
+  "dependencies": {
+    "koa": "^2.13.0",
+    "koa-router": "^9.4.0",
+    "socket.io": "^2.3.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
