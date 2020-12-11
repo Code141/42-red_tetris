@@ -11,6 +11,7 @@ class Game extends EventEmitter {
     this.id = crypto.randomBytes(3).toString('hex');
     this.spectators = [];
     this.players = [];
+    this.confirmedPlayer = [];
     this.pieces = [];
 
     // this.rules = (rules) ? rules : default_rules;
@@ -36,6 +37,13 @@ class Game extends EventEmitter {
 
     this.tick = 0;
     this.pieces = [];
+
+    this.confirmedPlayer.forEach((player, id) => {
+      player.status = "playing";
+      this.players.push(player)
+    });
+    this.confirmedPlayer = [];
+
     this.players.forEach((player, id) => {
       player.id_player = id;
       player.loose = false;
@@ -51,9 +59,7 @@ class Game extends EventEmitter {
     this.servePiece();
     */
 
-    this.broadcast('action', { type: 'GAME_STATUS', payload:
-      this.info(),
-    });
+    this.broadcast({ type: 'GAME_STATUS', payload: this.info() });
 
     setTimeout(() => {
       this.loop = setInterval(() => {
@@ -69,9 +75,7 @@ class Game extends EventEmitter {
     console.log('STOP GAME')
 
     /*
-    this.broadcast('action', { type: 'GAME_STATUS', payload: {
-      gameHasStarted: false,
-    } });
+    this.broadcast({ type: 'GAME_STATUS', payload: { gameHasStarted: false }});
     */
   }
 
@@ -87,18 +91,6 @@ class Game extends EventEmitter {
     // if (this.players.length === 0) => lunch this.closeGame()
     // broadcast players and spectators "good by"
     // (emit to top level => free me)
-  }
-
-  broadcast(actionName, payload) {
-    this.socketio.to(this.id).emit(actionName, payload);
-    /*
-    this.players.forEach((player, index) => {
-      player.socket.emit(actionName, payload);
-    });
-    this.spectators.forEach((spectator, index) => {
-      spectator.socket.emit(actionName, payload);
-    });
-    */
   }
 
   generateNewPiece() {
@@ -120,9 +112,7 @@ class Game extends EventEmitter {
       player.pieces.push({ ...newPiece });
     });
 
-    this.broadcast('action', { type: 'NEXT_PIECE', payload:
-      newPiece.info(),
-    });
+    this.broadcast({ type: 'NEXT_PIECE', payload: newPiece.info() });
   }
 
   isThereAWinner() {
@@ -141,6 +131,10 @@ class Game extends EventEmitter {
     return false;
   }
 
+  broadcast(payload) {
+    this.socketio.to(this.id).emit('action', {...payload, tick: this.tick});
+  }
+
   nextTick() {
     this.players.forEach((player) => {
       if (!player.loose) {
@@ -148,9 +142,8 @@ class Game extends EventEmitter {
       }
     });
 
-    this.broadcast('action', { type: 'NEXT_TICK', payload: {
+    this.broadcast({ type: 'NEXT_TICK', payload: {
       tick: this.tick,
-      players: this.players.map((player) => player.info()),
     } });
 
     this.tick = this.tick + 1;
@@ -158,22 +151,35 @@ class Game extends EventEmitter {
 
   addPlayer(user) {
     if (this.players.find(player => player === user)) { return false; }
-    this.players.push(user);
+//    if (this.spectator.find(spectator => spectator === user)) { return false; }
+
+    if (this.rules.needConfirmation) {
+      this.waitingConfirmationPlayer.push(user);
+    } else {
+      if (this.gameHasStarted) {
+        this.confirmedPlayer.push(user);
+      } else {
+        this.players.push(user);
+        user.status = "playing";
+      }
+    }
 
     user.board = new Board(this.rules.board.width, this.rules.board.height);
     user.room = this;
 
-    user.socket.join(this.id); // FOR BROADCAST
+    user.socket.join(this.id);
 
     user.socket.emit('action', { type: 'ROOM_JOINTED', payload:
       this.info(),
     })
+
     return true;
   }
 
   removePlayer(user) {
     if (this.players.find(player => player === user)) {
       this.players.splice(this.players.indexOf(user), 1);
+
       user.socket.leave(this.id);
       user.leaveRoom();
 
@@ -184,9 +190,11 @@ class Game extends EventEmitter {
 
       if (this.admin === user) {
         this.admin = this.players[0];
-        // BROADCAST WHO IS NEW ADMIN
+        this.broadcast({ type: 'ADMIN_ID', payload: this.admin.id });
       }
     }
+
+    this.broadcast({ type: 'USER_LEAVE_ROOM', payload: user.id_player});
   }
 
   autodestruct(){

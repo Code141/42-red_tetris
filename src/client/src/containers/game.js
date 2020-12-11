@@ -14,7 +14,7 @@ const AdminPanel = ({ startGame }) => (
   </div>
 )
 
-const Game = ({ game, leaveRoom, startGame, move }) => {
+const Game = ({ user, game, leaveRoom, startGame, move }) => {
 
   useKeyboardEvent('ArrowLeft', () => { move('STRAFE_LEFT') });
   useKeyboardEvent('ArrowRight', () => { move('STRAFE_RIGHT') });
@@ -41,7 +41,10 @@ const Game = ({ game, leaveRoom, startGame, move }) => {
       <br />
       admin: {game.admin}
       <hr />
-      <AdminPanel startGame={startGame} />
+      { user.id === game.admin &&
+        <AdminPanel startGame={startGame} />
+      }
+
       <hr />
       gameHasStarted: {(game.gameHasStarted) ? 'TRUE' : 'FALSE'}
       <hr />
@@ -89,6 +92,7 @@ function moveAction(move) {
 
 const mapStateToProps = (state) => ({
   game: state.game,
+  user: state.user
 })
 
 const mapDispatchToProps = (dispatch) => ({

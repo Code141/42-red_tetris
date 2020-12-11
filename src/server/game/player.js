@@ -19,62 +19,75 @@ class Player extends EventEmitter {
     this.pieces = [];
 
     this.board = undefined;
+    this.status = undefined;
+
+
+
 
     this.socket.on('move', (action) => {
-      if (!this.room || !this.room.gameHasStarted)
+      if (!this.room || !this.room.gameHasStarted || this.status !== "playing")
         return;
 
       if (action.payload === 'STRAFE_LEFT' &&
-        strafeLeft(this.board, this.pieces[0])) {
-        this.room.broadcast('action', { type: 'STRAFE_LEFT', payload: {
+        strafeLeft(this.board, this.pieces[this.nbPiecesLanded])) {
+        this.room.broadcast({ type: 'STRAFE_LEFT', payload: {
           id_player: this.id_player,
         },
         });
       }
 
       if (action.payload === 'STRAFE_RIGHT' &&
-        strafeRight(this.board, this.pieces[0])) {
-        this.room.broadcast('action', { type: 'STRAFE_RIGHT', payload:
-          {
-            id_player: this.id_player,
-          },
+        strafeRight(this.board, this.pieces[this.nbPiecesLanded])) {
+        this.room.broadcast({ type: 'STRAFE_RIGHT', payload: {
+          id_player: this.id_player,
+        },
         });
       }
     });
   }
 
   gravityTick() {
-    if (!moveDown(this.board, this.pieces[0])) {
+    if (!moveDown(this.board, this.pieces[this.nbPiecesLanded])) {
       this.landPiece();
     }
   }
 
   landPiece() {
-    this.board.mergePiece(this.pieces[0]);
+    this.room.broadcast({ type: 'LAND_PIECE', payload: {
+      id_player: this.id_player
+    }});
+
+    this.board.mergePiece(this.pieces[this.nbPiecesLanded]);
     this.nbPiecesLanded++;
-    this.pieces.shift();
+
 
     const linesToDelete = this.board.checkLine();
     const nbLinesToDelete = linesToDelete.length;
+
     if (nbLinesToDelete > 0) {
       this.board.deleteLines(linesToDelete);
+      this.room.broadcast({ type: 'DELETE_LINES', payload: {
+        id_player: this.id_player,
+        linesToDelete: linesToDelete
+      }});
     }
 
     this.getNextPiece();
 
-    if (checkCollision(this.board, this.pieces[0])) {
+    if (checkCollision(this.board, this.pieces[this.nbPiecesLanded])) {
+      console.log('LOOSER');
       this.loose = true;
-      this.room.broadcast('fact', { type: 'LOOSE', payload: {
+      this.room.broadcast({ type: 'LOOSE', payload: {
         userid: this.id,
-      } });
+      }});
       this.room.isThereAWinner();
-
     }
+
   }
 
   getNextPiece() {
-    if (this.pieces.length <= 0) {
-      if (this.nbPiecesLanded < this.room.pieces.length) {
+    if (this.pieces.length <= this.nbPiecesLanded) {
+      if (this.nbPiecesLanded + 3 < this.room.pieces.length) {
         this.pieces.push({ ...this.room.pieces[this.nbPiecesLanded] });
       }
       else {

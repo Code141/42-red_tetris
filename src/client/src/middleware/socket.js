@@ -13,8 +13,8 @@ const Socket = (url) => store => {
     });
   });
 
-  socket.on('connected', (data) => {
-    console.log(data);
+  socket.on('connected', (action) => {
+    store.dispatch(action);
   });
 
   socket.on('disconnect', (reason) => {
@@ -33,15 +33,17 @@ const Socket = (url) => store => {
   });
 
   socket.on('action', (action) => {
-    store.dispatch(action);
+      store.dispatch(action);
   });
 
-  socket.on('fact', (action) => {
-    store.dispatch(action);
+  socket.on('actions', (actions) => {
+    console.log(actions)
+    actions.forEach((action) => {
+      store.dispatch(action);
+    })
   });
 
   return next => action => {
-
     /*
     'ROOM_CREATED'
     'ROOM_JOINTED'

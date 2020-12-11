@@ -10,9 +10,6 @@ import Socket from './middleware/socket';
 
 import App from './containers/app'
 
-import history from './hooks/history';
-import { BrowserRouter as Router } from 'react-router-dom';
-
 import './css/reset.css'
 import './css/style.css'
 
@@ -27,9 +24,7 @@ const store = createStore(
 ReactDom.render((
   <React.StrictMode>
     <Provider store={store}>
-      <Router history={history}>
         <App/>
-      </Router>
     </Provider>
   </React.StrictMode>
 ), document.getElementById('root'))

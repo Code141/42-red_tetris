@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setUserNameAction } from '../actions/user'
 
 const CreateRoom = ({createRoom}) => (
   <div>
@@ -8,8 +7,6 @@ const CreateRoom = ({createRoom}) => (
     <br />
 
     <hr />
-
-    <form>
       GAME TYPE
       <br />
 
@@ -23,21 +20,27 @@ const CreateRoom = ({createRoom}) => (
 
       <label>
         Tick duration :
-        <input type="number" placeholder="" value="150" />
+        <input type="number" value="150" />
         ms
       </label>
       <br />
 
       <label>
         Heat room time :
-        <input type="number" placeholder="" value="3000" />
+        <input type="number" value="3000" />
         ms
       </label>
       <br />
 
       <label>
         Max player :
-        <input type="number" placeholder="" value="5" />
+        <input type="number" value="5" />
+      </label>
+      <br />
+
+      <label>
+        Need validation to join :
+        <input type="checkbox" value="true" />
       </label>
       <br />
 
@@ -52,13 +55,13 @@ const CreateRoom = ({createRoom}) => (
 
       <label>
         Width :
-        <input type="number" placeholder="" value="10" />
+        <input type="number" value="10" />
       </label>
       <br />
 
       <label>
         Height :
-        <input type="number" placeholder="" value="20" />
+        <input type="number" value="20" />
       </label>
 
       <hr/>
@@ -110,14 +113,10 @@ const CreateRoom = ({createRoom}) => (
       <label for="horizontal">Horizontal only</label>
       <hr />
 
-
       <button onClick={ () => createRoom('PAYLOAD/game_opts?') } >
         CREATE ROOM
       </button>
       <br />
-
-    </form>
-
 
   </div>
 )

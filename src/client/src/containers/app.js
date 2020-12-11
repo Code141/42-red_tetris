@@ -1,5 +1,6 @@
 import React from 'react'
-import { Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import history from '../hooks/history';
 
 import Game from '../containers/game'
 
@@ -7,39 +8,45 @@ import CreateRoom from '../components/createRoom'
 import Form from '../components/form'
 import RoomList from '../components/roomList'
 
-const App = () => (
-  <div className='wrap'>
-    <nav>
-      <ul>
-        <li>
-          <Link to='/'>
-                  Home
-          </Link>
-        </li>
-        <li>
-          <Link to='/createRoom'>
-                  CreateRoom 
-          </Link>
-        </li>
-        <li>
-          <Link to='/room'>
-                  Game
-          </Link>
-        </li>
-      </ul>
-    </nav>
+const App = () => {
 
-    <hr/>
+  console.log(history);
+  return (
+    <div className='wrap'>
+      <Router history={history}>
+        <nav>
+          <ul>
+            <li>
+              <Link to='/'>
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link to='createRoom'>
+                CreateRoom 
+              </Link>
+            </li>
+            <li>
+              <Link to='/room'>
+                Game
+              </Link>
+            </li>
+          </ul>
+        </nav>
 
-    <Route component={CreateRoom} path='/createRoom' />
-    <Route component={Game} path='/room' />
+      <hr/>
 
-    <Route exact path='/'>
-      <Form />
-      <RoomList />
-    </Route>
+      <Route path='/createRoom' component={CreateRoom} />
+      <Route path='/room' component={Game} />
 
-  </div>
-)
+      <Route exact path='/'>
+        <Form />
+        <RoomList />
+      </Route>
+
+      </Router>
+    </div>
+  )
+}
 
 export default App;

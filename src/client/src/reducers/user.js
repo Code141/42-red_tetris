@@ -8,6 +8,12 @@ const user = {
 const reducer = (state = user, action) => {
   switch (action.type) {
 
+  case 'CONNECTED':
+    return {
+      ...state,
+      ...action.payload
+    }
+
   case SET_USERNAME:
     return {
       ...state,

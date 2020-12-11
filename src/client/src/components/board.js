@@ -14,9 +14,9 @@ const Line = ({ cells, y }) => (
 )
 
 const Board = ({ player, game }) => {
-  const board = player.board;
 
-  const piece = player.pieces[0];
+  const board = player.board;
+  const piece = player.pieces[player.nbPiecesLanded];
   const buffer = game.rules.pieces[game.pieces[player.nbPiecesLanded].id];
 
   const b2 = board.buffer.map((line, y) => line.map((cell, x) => {

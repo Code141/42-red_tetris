@@ -2,6 +2,7 @@ const rooms = [];
 
 const reducer = (state = rooms, action) => {
   switch (action.type) {
+
   case 'ROOM_LIST':
     return action.payload
 

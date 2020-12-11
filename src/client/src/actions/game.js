@@ -8,6 +8,9 @@ export const ROOM_LEAVED = 'ROOM_LEAVED';
 export const LOOSE = 'LOOSE';
 export const STRAFE_LEFT = 'STRAFE_LEFT';
 export const STRAFE_RIGHT = 'STRAFE_RIGHT';
+export const ADMIN_ID = 'ADMIN_ID';
+export const LAND_PIECE = 'LAND_PIECE';
+export const DELETE_LINES = 'DELETE_LINES';
 
 /*
 export const gameAction = (cell) => {
