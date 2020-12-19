@@ -59,8 +59,6 @@ const Game = ({ user, game, leaveRoom, startGame, move }) => {
       SPECTATORS :
       <br />
       { game.spectators.map((spectator) => (`${spectator.id}: ${spectator.username}`)) }
-
-
       <hr />
 
       { boards }

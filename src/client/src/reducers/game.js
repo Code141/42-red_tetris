@@ -128,9 +128,9 @@ const reducer = (state = game, action) => {
             )
           }
 
-          if (player.linesToDelete)
+          if (nextStatePlayer.linesToDelete)
           {
-            nextStatePlayer.board = deleteLines(player.board, player.linesToDelete);
+            nextStatePlayer.board = deleteLines(nextStatePlayer.board, nextStatePlayer.linesToDelete);
             nextStatePlayer.linesToDelete = undefined;
           }
 
@@ -146,7 +146,9 @@ const reducer = (state = game, action) => {
       return {
         ...state,
         players: state.players.map((player, id) =>
-          (id !== id_player) ? { ...player } : { ...player, linesToDelete: action.payload.linesToDelete, }
+          (id !== id_player)
+          ? { ...player }
+          : { ...player, linesToDelete: action.payload.linesToDelete }
         )
       }
 
@@ -175,7 +177,9 @@ const reducer = (state = game, action) => {
       return {
         ...state,
         players: state.players.map((player, id) =>
-          (id !== id_player) ? { ...player } : { ...player, landed: true, }
+          (id !== id_player)
+          ? { ...player }
+          : { ...player, landed: true }
         )
       }
 
