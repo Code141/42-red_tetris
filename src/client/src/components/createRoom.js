@@ -3,18 +3,37 @@ import { connect } from 'react-redux'
 
 import default_rules from '../game/default_rules.json'
 
-const Input = ({type, min, max, value, name, suffix}) => {
+const NumberInput = ({ min, max, value, name, suffix}) => {
   return (
     <div>
       <label>
         {name} :
-        <input
-          type="number"
+        <input type="number"
           min={min}
           max={max}
           value={value}
         />
         {suffix}
+      </label>
+      <hr/>
+    </div>
+  )
+}
+
+const BoolInput = ({ value, name }) => {
+  return (
+    <div>
+      <label>
+        {name} :
+        <input type="checkbox"
+          value={value}
+          checked={
+            ((value !== "false" || value !== false)
+              && (value === "true" || value === true))
+            ? 'checked'
+            : ''
+          }
+        />
       </label>
       <hr/>
     </div>
@@ -35,7 +54,11 @@ const CreateRoom = ({createRoom}) => {
 
           if (default_rules[key].type === "number") {
 
-            return (<Input {...default_rules[key]} />)
+            return (<NumberInput {...default_rules[key]} />)
+
+          } else if (default_rules[key].type === "bool") {
+
+            return (<BoolInput {...default_rules[key]} />)
 
           } else {
 
@@ -44,6 +67,7 @@ const CreateRoom = ({createRoom}) => {
           }
 
         })
+
       }
 
 
@@ -51,14 +75,6 @@ const CreateRoom = ({createRoom}) => {
 
 
 
-
-
-
-
-
-
-
-      <Input type="number" min="100" max="1000" value="500" name="Tick" suffix="ms"/>
       <button onClick={ () => createRoom('PAYLOAD/game_opts?') } >
         CREATE ROOM
       </button>

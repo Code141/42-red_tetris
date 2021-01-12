@@ -99,7 +99,7 @@ const reducer = (state = game, action) => {
           let nextStatePlayer = { ...player };
 
           if (nextStatePlayer.landed) {
-            const buffer = state.rules.pieces[state.pieces[player.nbPiecesLanded].id];
+            const buffer = state.rules.pieces.values[state.pieces[player.nbPiecesLanded].id];
             const piece = player.pieces[player.nbPiecesLanded];
             nextStatePlayer.landed = false;
             nextStatePlayer.nbPiecesLanded += 1;

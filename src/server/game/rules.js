@@ -43,7 +43,7 @@ export function checkCollision(board, piece) {
   // THEN CHECK COLLISION
 
   // check if the piece hit the bottom
-  if (piece.height + piece.y > board.buffer.length) {
+  if (piece.height + piece.y > board.height) {
     return true;
   }
 

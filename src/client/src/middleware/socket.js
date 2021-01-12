@@ -5,8 +5,6 @@ const Socket = (url) => store => {
   const socket = io(url);
 
   socket.on('connect', () => {
-    console.log('CONNECTED');
-    socket.send('hello')
     store.dispatch({
       type: 'SET_SOCKET_CONNECTED',
       payload: true,

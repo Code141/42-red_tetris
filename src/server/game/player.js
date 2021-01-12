@@ -82,7 +82,7 @@ class Player extends EventEmitter {
       }});
       this.room.isThereAWinner();
     }
-
+    this.board.debug();
   }
 
   getNextPiece() {

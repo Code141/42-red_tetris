@@ -3,52 +3,51 @@
     "name": "Tick duration",
     "suffix": "ms",
     "type": "number",
-    "value" : "200",
-    "min" : "100",
-    "max" : "100"
+    "value" : 100,
+    "min" : 100,
+    "max" : 3000
   },
   "heatRoomTime": {
     "name": "Heat room time",
     "suffix": "ms",
     "type": "number",
-    "value" : "2000",
-    "min" : "1000",
-    "max" : "1000"
+    "value" : 2000,
+    "min" : 100,
+    "max" : 10000
   },
   "maxPlayer": {
     "name": "Max Player",
     "suffix": "ms",
     "type": "number",
-    "value" : "2",
-    "min" : "1",
-    "max" : "10"
+    "value" : 2,
+    "min" : 1,
+    "max" : 10
   },
   "needConfirmation": {
     "name": "Player need admin confirmation",
-    "suffix": "ms",
     "type": "bool",
-    "value" : "false"
+    "value" : false
   },
   "allowSpectator": {
     "name": "Allow Spectators",
     "type": "bool",
-    "value" : "false"
+    "value" : true
   },
   "boardWidth": {
     "name": "Board width",
     "suffix": "Columns",
     "type": "number",
-    "value" : "10",
-    "min" : "5",
-    "max" : "20"
+    "value" : 10,
+    "min" : 5,
+    "max" : 20
   },
   "boardHeight": {
     "name": "Board height",
     "suffix": "Lines",
     "type": "number",
-    "value" : "20",
-    "min" : "5",
-    "max" : "20"
+    "value" : 20,
+    "min" : 5,
+    "max" : 20
   },
   "actions": {
     "name": "Permited move",
@@ -106,15 +105,18 @@
         [5],
         [5]
       ]
-    ]},
-    "pieceProbabilitySpawn": [1, 1, 1, 1, 1, 10, 10],
-    "pieceColors": [
-      [0, 0, 255],
-      [0, 255, 255],
-      [255, 0, 255],
-      [255, 0, 0],
-      [255, 0, 255],
-      [255, 255, 0],
-      [255, 255, 255]
     ]
+  },
+  "pieceProbabilitySpawn": {
+    "values" : [1, 1, 1, 1, 1, 1, 1]
+  },
+  "pieceColors": [
+    [0, 0, 255],
+    [0, 255, 255],
+    [255, 0, 255],
+    [255, 0, 0],
+    [255, 0, 255],
+    [255, 255, 0],
+    [255, 255, 255]
+  ]
 }

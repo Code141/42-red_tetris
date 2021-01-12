@@ -59,6 +59,7 @@ class Board {
       while (x < ll) {
         if (pieceBuffer[y][x] !== 0) {
           this.buffer[piece.y + y][piece.x + x] = pieceBuffer[y][x];
+          console.log()
         }
         x++;
       }
@@ -73,8 +74,7 @@ class Board {
     let x = 0;
 
     while (y < this.height) {
-      while (x < this.width &&
-        this.buffer[y][x] !== 0 &&
+      while (x < this.width && this.buffer[y][x] !== 0 &&
         this.buffer[y][x] !== 255) {
         x++;
       }
@@ -86,6 +86,20 @@ class Board {
     }
     return lines;
   }
+
+  debug() {
+    let line = "";
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        line += this.buffer[y][x] + "";
+      }
+      console.log(line);
+      line = "";
+    }
+      console.log(this.buffer);
+      console.log("");
+  }
+
 }
 
 export default Board;

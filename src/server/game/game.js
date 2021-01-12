@@ -10,6 +10,7 @@ class Game extends EventEmitter {
     this.socketio = socketio;
     this.id = crypto.randomBytes(3).toString('hex');
     this.spectators = [];
+    this.waitingConfirmationPlayer = [];
     this.players = [];
     this.confirmedPlayer = [];
     this.pieces = [];
@@ -18,8 +19,8 @@ class Game extends EventEmitter {
     this.rules = rules; // PARSE USER RULES HERE
 
     this.gameHasStarted = false;
-    this.heatRoomTime = rules.heatRoomTime;
-    this.tickDuration = rules.tickDuration;
+    this.heatRoomTime = rules.heatRoomTime.value;
+    this.tickDuration = rules.tickDuration.value;
 
     this.tick = 0;
     this.round = 0;
@@ -47,7 +48,8 @@ class Game extends EventEmitter {
     this.players.forEach((player, id) => {
       player.id_player = id;
       player.loose = false;
-      player.board.clear();
+      //player.board.clear();
+      player.board = new Board(this.rules.boardWidth.value, this.rules.boardHeight.value);
       player.pieces = [];
       player.nbPiecesLanded = 0;
     })
@@ -96,9 +98,9 @@ class Game extends EventEmitter {
   generateNewPiece() {
     let acc = 0;
     let pieceIndex = 0;
-    const position = Math.random() * this.rules.pieceProbabilitySpawn.reduce((sum, x) => sum + x);
+    const position = Math.random() * this.rules.pieceProbabilitySpawn.values.reduce((sum, x) => sum + x);
 
-    this.rules.pieceProbabilitySpawn.some((value, index) => {
+    this.rules.pieceProbabilitySpawn.values.some((value, index) => {
       acc = acc + value;
       pieceIndex = index;
       return position < acc
@@ -153,7 +155,7 @@ class Game extends EventEmitter {
     if (this.players.find(player => player === user)) { return false; }
 //    if (this.spectator.find(spectator => spectator === user)) { return false; }
 
-    if (this.rules.needConfirmation) {
+    if (this.rules.needConfirmation.value) {
       this.waitingConfirmationPlayer.push(user);
     } else {
       if (this.gameHasStarted) {
@@ -164,7 +166,8 @@ class Game extends EventEmitter {
       }
     }
 
-    user.board = new Board(this.rules.board.width, this.rules.board.height);
+    user.board = new Board(this.rules.boardWidth.value, this.rules.boardHeight.value);
+
     user.room = this;
 
     user.socket.join(this.id);
