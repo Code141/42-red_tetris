@@ -1,54 +1,104 @@
+body2 {
+  background-color: black;
+  color: white;
+}
+
+
 .wrap{
 }
 
-.board{
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-  border: 10px solid black;
-  float:left;
+.player.loose{
+  color: red;
+  text-decoration: line-through;
+  opacity: 0.5;
 }
 
-.loose{
-  filter: saturate(0.3) blur(0.5px);
-  border-color: red;
+.game{
+  display: inline-flex;
+  flex-direction: row;
+  border: 10px solid grey;
+  background-image: linear-gradient(#444444, #111111);
+}
+
+.game.loose{
+  filter: saturate(0.1) blur(0.5px);
+}
+
+.board{
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  border: 1px solid black;
+}
+
+.boards .cell{
+  width: 10px;
+  height: 10px;
+  box-shadow: none;
+  border-radius: 1px;
+}
+
+.boards .game{
+  flex-direction: column;
+}
+
+.cartridge{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid black;
 }
 
 .line{
-  display: inline-block;
-  width: 200px;
-  height: 20px;
-  flex-wrap: wrap;
+  display: inline-flex;
 }
 
 .cell{
+  box-shadow:
+  -3px -3px 0px 0px rgba(0, 0, 0, 0.1) inset,
+  3px 3px 0px 0px rgba(255, 255, 255, 0.02) inset;
+  border-radius: 2px;
   display: inline-block;
   width: 18px;
   height: 18px;
-  border: 1px solid white;
-  background-color: rgba(200, 200, 255);
+  margin-top: 1px;
+  margin-left: 1px;
 }
 
+.block{
+  box-shadow:
+  -3px -3px 0px 0px rgba(0, 0, 0, 0.5) inset,
+  3px 3px 0px 0px rgba(255, 255, 255, 0.5) inset;
+}
 
 .c0{
-  background-color: rgba(255, 255, 255, 1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
+
 .c1{
   background-color: rgba(0, 0, 255, 1);
 }
+
 .c2{
   background-color: rgba(0, 255, 255, 1);
 }
+
 .c3{
   background-color: rgba(0, 255, 0, 1);
 }
+
 .c4{
   background-color: rgba(255, 255, 0, 1);
 }
+
 .c5{
   background-color: rgba(255, 0, 0, 1);
 }
 
 .c255{
   background-color: rgba(64, 64, 64, 1);
+}
+
+.c254{
+  background-color: rgba(124, 64, 244, 1);
 }

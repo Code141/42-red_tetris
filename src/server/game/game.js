@@ -48,18 +48,13 @@ class Game extends EventEmitter {
     this.players.forEach((player, id) => {
       player.id_player = id;
       player.loose = false;
-      //player.board.clear();
-      player.board = new Board(this.rules.boardWidth.value, this.rules.boardHeight.value);
+      player.board.clear();
       player.pieces = [];
       player.nbPiecesLanded = 0;
     })
 
     this.servePiece();
-
-    /*
-    this.servePiece();
-    this.servePiece();
-    */
+    this.servePiece(); // NEED SERVE TWO PICE FOR PREVIEW NEXT PIECE
 
     this.broadcast({ type: 'GAME_STATUS', payload: this.info() });
 
@@ -84,9 +79,13 @@ class Game extends EventEmitter {
   nextMatch() {
     this.stopGame();
 
+    if (this.players.length === 0) {
+      this.autodestruct();
+      return;
+    }
     setTimeout(() => {
       this.startGame();
-    }, 1000)
+    }, this.rules.looseWaiting.value)
   }
 
   closeGame() {
@@ -105,7 +104,13 @@ class Game extends EventEmitter {
       pieceIndex = index;
       return position < acc
     })
-    return new Piece(pieceIndex, this.rules);
+
+    const piece = this.rules.pieces.values[pieceIndex];
+    let newPiece = new Piece(piece, pieceIndex);
+    newPiece.x = Math.round(
+      Math.random() * (this.rules.boardWidth.value - newPiece.width)
+    );
+    return newPiece;
   }
 
   servePiece(newPiece = this.generateNewPiece()) {
@@ -119,18 +124,16 @@ class Game extends EventEmitter {
 
   isThereAWinner() {
     const potentialWinners = this.players.filter(player => !player.loose);
-    if (potentialWinners.length === 1) {
+    if (potentialWinners.length === 1 && this.players.length > 1) {
       const winner = potentialWinners[0];
       winner.score++;
       this.nextMatch();
-      return true;
     }
     else if (potentialWinners.length === 0) {
       // DRAW GAME !
+      console.log('DRAW');
       this.nextMatch();
-      return true;
     }
-    return false;
   }
 
   broadcast(payload) {
@@ -143,6 +146,8 @@ class Game extends EventEmitter {
         player.gravityTick();
       }
     });
+
+    this.isThereAWinner();
 
     this.broadcast({ type: 'NEXT_TICK', payload: {
       tick: this.tick,

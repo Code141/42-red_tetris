@@ -59,7 +59,6 @@ class Board {
       while (x < ll) {
         if (pieceBuffer[y][x] !== 0) {
           this.buffer[piece.y + y][piece.x + x] = pieceBuffer[y][x];
-          console.log()
         }
         x++;
       }
@@ -96,7 +95,6 @@ class Board {
       console.log(line);
       line = "";
     }
-      console.log(this.buffer);
       console.log("");
   }
 

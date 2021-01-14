@@ -118,11 +118,9 @@ const reducer = (user, action) => { // RENAME INTO ROUTER !! ??
       room.on('autodestruct', () => {
         console.log('WE ARE GOING TO AUTODESTRUCT');
         room.autodestruct();
-
         if (ROOMS.find(someroom => someroom === room)) {
           ROOMS.splice(ROOMS.indexOf(room), 1);
         };
-
       });
 
       ROOMS.push(room);

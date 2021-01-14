@@ -15,6 +15,14 @@
     "min" : 100,
     "max" : 10000
   },
+  "looseWaiting": {
+    "name": "Time waiting after loose",
+    "suffix": "ms",
+    "type": "number",
+    "value" : 3000,
+    "min" : 100,
+    "max" : 10000
+  },
   "maxPlayer": {
     "name": "Max Player",
     "suffix": "ms",
@@ -63,6 +71,7 @@
   "fogOfWar": {
     "name": "Fog of war",
     "type": "radio",
+    "value": "vertical",
     "values": [
       "all",
       "vertical",

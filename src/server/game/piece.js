@@ -1,6 +1,9 @@
 class Piece {
-  constructor(pieceIndex, rules) {
-    const piece = rules.pieces.values[pieceIndex];
+  constructor(piece, id) {
+    this.id = id;
+    this.x = 0;
+    this.y = 0;
+    this.rotation = 0;
 
     this.height = piece.length;
     this.width = 0;
@@ -8,11 +11,6 @@ class Piece {
       if (this.width < piece[y].length) { this.width = piece[y].length; }
     }
     this.buffer = piece;
-
-    this.id = pieceIndex;
-    this.x = Math.round(Math.random() * (rules.boardWidth.value - this.width));
-    this.y = 0;
-    this.rotation = 0;
   }
 
   info() {

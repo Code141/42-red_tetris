@@ -80,19 +80,17 @@ class Player extends EventEmitter {
       this.room.broadcast({ type: 'LOOSE', payload: {
         userid: this.id,
       }});
-      this.room.isThereAWinner();
     }
-    this.board.debug();
   }
 
   getNextPiece() {
-    if (this.pieces.length <= this.nbPiecesLanded) {
-      if (this.nbPiecesLanded + 3 < this.room.pieces.length) {
+    if (this.nbPiecesLanded + 2 > this.pieces.length) {
+      /*
+      if (this.nbPiecesLanded + 1 < this.room.pieces.length) {
         this.pieces.push({ ...this.room.pieces[this.nbPiecesLanded] });
       }
-      else {
-        this.room.servePiece();
-      }
+      */
+      this.room.servePiece();
     }
   }
 
@@ -126,6 +124,7 @@ class Player extends EventEmitter {
         id: piece.id,
         x: piece.x,
         y: piece.y,
+        rotation: piece.rotation
       })),
       board: this.board,
     }

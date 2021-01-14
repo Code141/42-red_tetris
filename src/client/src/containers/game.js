@@ -14,21 +14,55 @@ const AdminPanel = ({ startGame }) => (
   </div>
 )
 
+const PlayerList = ({ players }) => {
+  return (
+    players.map((player) => {
+      return (
+        <div className={`player ${(player.loose) ? 'loose' : ''}`} >
+          {player.username}
+          {player.score}
+        </div>
+      )
+    })
+  )
+}
+
 const Game = ({ user, game, leaveRoom, startGame, move }) => {
 
   useKeyboardEvent('ArrowLeft', () => { move('STRAFE_LEFT') });
   useKeyboardEvent('ArrowRight', () => { move('STRAFE_RIGHT') });
 
+  let myboard = '';
   let boards = '';
 
   if (game.gameHasStarted) {
-    boards = game.players.map((player, index) => (
-      <Board
-        game={game}
-        key={index}
-        player={player}
-      />
-    ));
+    myboard = game.players.map((player, index) => {
+      if (player.id === user.id) {
+        return (
+          <Board
+            game={game}
+            key={index}
+            player={player}
+            type="personal"
+          />
+        )
+      }
+    }
+    );
+
+    boards = game.players.map((player, index) => {
+      if (player.id !== user.id) {
+        return (
+          <Board
+            game={game}
+            key={index}
+            player={player}
+            type="player"
+          />
+        )
+      }
+    }
+    );
   }
 
   return (
@@ -41,8 +75,8 @@ const Game = ({ user, game, leaveRoom, startGame, move }) => {
       <br />
       admin: {game.admin}
       <hr />
-      { user.id === game.admin &&
-        <AdminPanel startGame={startGame} />
+      { game.admin === user.id &&
+      <AdminPanel startGame={startGame} />
       }
 
       <hr />
@@ -54,14 +88,17 @@ const Game = ({ user, game, leaveRoom, startGame, move }) => {
       <br />
       PLAYERS :
       <br />
-      { game.players.map((player) => (`${player.id}: ${player.username}`)) }
+      <PlayerList players={game.players} />
       <br />
       SPECTATORS :
       <br />
       { game.spectators.map((spectator) => (`${spectator.id}: ${spectator.username}`)) }
       <hr />
 
-      { boards }
+      { myboard }
+      <div className="boards">
+        { boards }
+      </div>
 
     </div>
   )

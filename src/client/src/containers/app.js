@@ -10,7 +10,6 @@ import RoomList from '../components/roomList'
 
 const App = () => {
 
-  console.log(history);
   return (
     <div className='wrap'>
       <Router history={history}>
