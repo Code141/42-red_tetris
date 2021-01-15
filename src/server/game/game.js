@@ -158,25 +158,19 @@ class Game extends EventEmitter {
 
   addPlayer(user) {
     if (this.players.find(player => player === user)) { return false; }
-//    if (this.spectator.find(spectator => spectator === user)) { return false; }
+    if (this.confirmedPlayer.find(player => player === user)) { return false; }
+    if (this.waitingConfirmationPlayer.find(player => player === user)) { return false; }
+    //    if (this.spectator.find(spectator => spectator === user)) { return false; }
 
     if (this.rules.needConfirmation.value) {
       this.waitingConfirmationPlayer.push(user);
     } else {
-      if (this.gameHasStarted) {
-        this.confirmedPlayer.push(user);
-      } else {
-        this.players.push(user);
-        user.status = "playing";
-      }
+      this.confirmedPlayer.push(user);
     }
 
     user.board = new Board(this.rules.boardWidth.value, this.rules.boardHeight.value);
-
     user.room = this;
-
     user.socket.join(this.id);
-
     user.socket.emit('action', { type: 'ROOM_JOINTED', payload:
       this.info(),
     })
@@ -185,45 +179,76 @@ class Game extends EventEmitter {
   }
 
   removePlayer(user) {
-    if (this.players.find(player => player === user)) {
+    let finded = false;
+    if (this.players.find(player => player === user)){
       this.players.splice(this.players.indexOf(user), 1);
-
-      user.socket.leave(this.id);
-      user.leaveRoom();
-
-      if (this.players.length === 0){
-        this.emit('autodestruct');
-        return;
-      }
-
-      if (this.admin === user) {
-        this.admin = this.players[0];
-        this.broadcast({ type: 'ADMIN_ID', payload: this.admin.id });
-      }
+      finded = true;
     }
 
+    if (this.waitingConfirmationPlayer.find(player => player === user)) {
+      this.waitingConfirmationPlayer.splice(this.waitingConfirmationPlayer.indexOf(user), 1);
+      finded = true;
+    }
+
+    if (this.confirmedPlayer.find(player => player === user)) {
+      this.confirmedPlayer.splice(this.confirmedPlayer.indexOf(user), 1);
+      finded = true;
+    }
+
+    if (!finded)
+      return;
+
+    user.socket.leave(this.id);
+    user.leaveRoom();
+
+    if (this.players.length === 0) {
+      if (this.confirmedPlayer.length === 0) {
+        if (this.waitingConfirmationPlayer.length === 0) {
+          this.emit('autodestruct');
+          return;
+        } else {
+          this.waitingConfirmationPlayer.forEach((player, id) => {
+            this.waitingConfirmationPlayer.push(player)
+          });
+          this.waitingConfirmationPlayer = [];
+        }
+      } else {
+        this.confirmedPlayer.forEach((player, id) => {
+          player.status = "playing";
+          this.players.push(player)
+        });
+        this.confirmedPlayer = [];
+      }
+      this.nextMatch();
+    }
+
+    if (this.admin === user) {
+      this.admin = this.players[0];
+      this.broadcast({ type: 'ADMIN_ID', payload: this.admin.id });
+    }
     this.broadcast({ type: 'USER_LEAVE_ROOM', payload: user.id_player});
-  }
+    this.players.forEach((player, id) => { player.id_player = id; })
+}
 
-  autodestruct(){
-    this.players.forEach(player => this.removePlayer(player));
-    // this.spectator.forEach(spectator => this.removeSpectator(spectator));
-  }
+autodestruct(){
+  this.players.forEach(player => this.removePlayer(player));
+  // this.spectator.forEach(spectator => this.removeSpectator(spectator));
+}
 
-  info() {
-    return ({
-      id: this.id,
-      admin: this.admin.id,
-      players: this.players.map(player => player.info()),
-      pieces: this.pieces.map(piece => piece.info()),
-      spectators: this.spectators.map(spectator => ({
-        id: spectator.id,
-        username: spectator.username,
-      })),
-      gameHasStarted: this.gameHasStarted,
-      rules: this.rules,
-    });
-  }
+info() {
+  return ({
+    id: this.id,
+    admin: this.admin.id,
+    players: this.players.map(player => player.info()),
+    pieces: this.pieces.map(piece => piece.info()),
+    spectators: this.spectators.map(spectator => ({
+      id: spectator.id,
+      username: spectator.username,
+    })),
+    gameHasStarted: this.gameHasStarted,
+    rules: this.rules,
+  });
+}
 
 }
 

@@ -2,6 +2,7 @@ import {
   GAME_STATUS,
   ROOM_JOINTED,
   ROOM_LEAVED,
+  USER_LEAVE_ROOM,
   NEXT_TICK,
   NEXT_PIECE,
   LOOSE,
@@ -87,6 +88,15 @@ const reducer = (state = game, action) => {
 
     case ROOM_LEAVED:
       return game;
+
+    case USER_LEAVE_ROOM:
+      return {
+        ...state,
+        players: state.players.filter((player, id) => {
+          if (id !== action.payload) { return true }
+          return false;
+        })
+      };
 
     case NEXT_TICK:
       return {

@@ -114,6 +114,7 @@ const reducer = (user, action) => { // RENAME INTO ROUTER !! ??
         console.log("YOU CANNOT BE ADMIN OF TWO ROOM");
         return;
       }
+      console.log(action.payload);
       const room = new Game(default_rules, user, socketio)
       room.on('autodestruct', () => {
         console.log('WE ARE GOING TO AUTODESTRUCT');
@@ -121,6 +122,8 @@ const reducer = (user, action) => { // RENAME INTO ROUTER !! ??
         if (ROOMS.find(someroom => someroom === room)) {
           ROOMS.splice(ROOMS.indexOf(room), 1);
         };
+        user.socket.broadcast.emit('action', { type: 'ROOM_LIST', payload: getRoomList() })
+        user.socket.emit('action', { type: 'ROOM_LIST', payload: getRoomList() })
       });
 
       ROOMS.push(room);
@@ -194,6 +197,8 @@ socketio.on('connection', (socket) => {
     ...user.info()
   }
   });
+
+  user.socket.emit('action', { type: 'ROOM_LIST', payload: getRoomList() })
 
   socket.on('action', (action) => {
     console.log(` ${colorise('ACTION', 'FgRed')} ${colorise(action.type, 'FgGreen')} ${colorise('FROM', 'FgRed')} ${user.id} ${user.username} `);

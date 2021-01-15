@@ -106,9 +106,6 @@ class Player extends EventEmitter {
     if (this.room) {
       this.room.removePlayer(this);
       this.room = undefined;
-      this.pieces = [];
-      this.score = 0;
-
       // REMOVE LISTNER
     }
   }

@@ -1,9 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import default_rules from '../game/default_rules.json'
 
-const NumberInput = ({ min, max, value, name, suffix}) => {
+const NumberInput = ({ min, max, value, name, suffix, cb }) => {
   return (
     <div>
       <label>
@@ -12,6 +11,7 @@ const NumberInput = ({ min, max, value, name, suffix}) => {
           min={min}
           max={max}
           value={value}
+          onChange={ (e)=>{ cb(e.target.value) } }
         />
         {suffix}
       </label>
@@ -20,7 +20,7 @@ const NumberInput = ({ min, max, value, name, suffix}) => {
   )
 }
 
-const BoolInput = ({ value, name }) => {
+const BoolInput = ({ value, name, cb }) => {
   return (
     <div>
       <label>
@@ -30,9 +30,10 @@ const BoolInput = ({ value, name }) => {
           checked={
             ((value !== "false" || value !== false)
               && (value === "true" || value === true))
-            ? 'checked'
-            : ''
+                ? 'checked'
+                : ''
           }
+          onChange={ (e)=>{ cb(e.target.value) } }
         />
       </label>
       <hr/>
@@ -40,42 +41,34 @@ const BoolInput = ({ value, name }) => {
   )
 }
 
-const CreateRoom = ({createRoom}) => {
+const CreateRoom = ({ roomForm, createRoom, setRoomOptions }) => {
 
-  console.log(typeof default_rules);
+  const printForm = Object.keys(roomForm).map(key => {
+    let cb = (value) => { setRoomOptions({key:key, value:value}); }
+    if (roomForm[key].type === "number") {
+      return (<NumberInput {...roomForm[key]} cb={cb} />)
+    } else if (roomForm[key].type === "bool") {
+      return (<BoolInput {...roomForm[key]} cb={cb}/>)
+    } else {
+      return (<div>{key}</div>)
+    }
+  });
 
   return (
     <div>
       CREATE ROOM
       <hr />
-
-      {
-        Object.keys(default_rules).map(key => {
-
-          if (default_rules[key].type === "number") {
-
-            return (<NumberInput {...default_rules[key]} />)
-
-          } else if (default_rules[key].type === "bool") {
-
-            return (<BoolInput {...default_rules[key]} />)
-
-          } else {
-
-            return (<div>{key}</div>)
-
-          }
-
-        })
-
+      { printForm }
+      <button onClick={ () => {
+        let roomFormCleaned = {};
+        Object.keys(roomForm).forEach(key => 
+          roomFormCleaned[key] = (roomForm[key].hasOwnProperty("value"))
+            ? roomForm[key].value
+            : roomForm[key].values
+        );
+        createRoom(roomFormCleaned);
       }
-
-
-
-
-
-
-      <button onClick={ () => createRoom('PAYLOAD/game_opts?') } >
+        } >
         CREATE ROOM
       </button>
       <br />
@@ -91,8 +84,23 @@ function createRoomAction(options) {
   }
 }
 
-const mapDispatchToProps = (dispatch, payload) => ({
-  createRoom: (options) => dispatch(createRoomAction(options))
+function setRoomOptions(options) {
+  return {
+    type: 'SET_FORM',
+    payload: {
+      key: options.key,
+      value: options.value
+    },
+  }
+}
+
+const mapStateToProps = (state) => ({
+  roomForm: state.roomForm
 })
 
-export default connect(null, mapDispatchToProps)(CreateRoom);
+const mapDispatchToProps = (dispatch, payload) => ({
+  createRoom: (options) => dispatch(createRoomAction(options)),
+  setRoomOptions: (options) => dispatch(setRoomOptions(options))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateRoom);

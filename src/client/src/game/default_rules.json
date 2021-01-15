@@ -25,7 +25,7 @@
   },
   "maxPlayer": {
     "name": "Max Player",
-    "suffix": "ms",
+    "suffix": "players",
     "type": "number",
     "value" : 2,
     "min" : 1,
@@ -71,7 +71,7 @@
   "fogOfWar": {
     "name": "Fog of war",
     "type": "radio",
-    "value": "vertical",
+    "value": "all",
     "values": [
       "all",
       "vertical",

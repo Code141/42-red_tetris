@@ -5,6 +5,7 @@ export const NEXT_TICK = 'NEXT_TICK';
 export const NEXT_PIECE = 'NEXT_PIECE';
 export const GAME_STATUS = 'GAME_STATUS';
 export const ROOM_LEAVED = 'ROOM_LEAVED';
+export const USER_LEAVE_ROOM = 'USER_LEAVE_ROOM';
 export const LOOSE = 'LOOSE';
 export const STRAFE_LEFT = 'STRAFE_LEFT';
 export const STRAFE_RIGHT = 'STRAFE_RIGHT';
