@@ -1,6 +1,11 @@
-body2 {
+* {
+  box-sizing: border-box;
+}
+
+body {
   background-color: black;
   color: white;
+  font-family: Arial, sans-serif;
 }
 
 
@@ -24,10 +29,14 @@ body2 {
   filter: saturate(0.1) blur(0.5px);
 }
 
-.board{
-  display: flex;
-  flex-direction: column;
+.game .board{
   margin: 20px;
+}
+
+.board{
+  display: inline-flex;
+  flex-direction: column;
+  margin: 5px;
   border: 1px solid black;
 }
 
@@ -101,4 +110,69 @@ body2 {
 
 .c254{
   background-color: rgba(124, 64, 244, 1);
+}
+
+/*FORM*/
+
+.modale{
+  position: relative;
+  width: 500px;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+
+  padding: 30px;
+
+  background-color: rgba(255, 255, 255, 0.1);;
+}
+.modale .title{
+  margin: auto;
+  font-size: 20px;
+}
+
+form {
+  color: grey;
+  display: inline-flex;
+  flex-direction: column;
+}
+form div.inputForm{
+  display:inline-flex;
+  padding: 10px;
+}
+
+label {
+  display: inline;
+  text-align: right;
+  vertical-align:middle;
+  color: white;
+  width: 50%;
+  padding-right: 10px;
+  padding-top: 5px;
+}
+
+.inputForm div{
+}
+
+input {
+  width: 50px;
+  border: none;
+  margin: 0px;
+  margin-right: 10px;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+input[type=checkbox]{
+  margin-top: 5px;
+}
+
+.inputForm{
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gametype button{
+  width: auto;
 }

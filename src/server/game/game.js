@@ -19,8 +19,8 @@ class Game extends EventEmitter {
     this.rules = rules; // PARSE USER RULES HERE
 
     this.gameHasStarted = false;
-    this.heatRoomTime = rules.heatRoomTime.value;
-    this.tickDuration = rules.tickDuration.value;
+    this.heatRoomTime = rules.heatRoomTime;
+    this.tickDuration = rules.tickDuration;
 
     this.tick = 0;
     this.round = 0;
@@ -85,7 +85,7 @@ class Game extends EventEmitter {
     }
     setTimeout(() => {
       this.startGame();
-    }, this.rules.looseWaiting.value)
+    }, this.rules.looseWaiting)
   }
 
   closeGame() {
@@ -97,18 +97,20 @@ class Game extends EventEmitter {
   generateNewPiece() {
     let acc = 0;
     let pieceIndex = 0;
-    const position = Math.random() * this.rules.pieceProbabilitySpawn.values.reduce((sum, x) => sum + x);
+    let pieceProbabilitySpawn = this.rules.pieces.pieceProbabilitySpawn;
+    const position = Math.random() * pieceProbabilitySpawn.reduce((sum, x) => sum + x);
 
-    this.rules.pieceProbabilitySpawn.values.some((value, index) => {
+    pieceProbabilitySpawn.some((value, index) => {
       acc = acc + value;
       pieceIndex = index;
       return position < acc
     })
 
     const piece = this.rules.pieces.values[pieceIndex];
+    console.log(piece);
     let newPiece = new Piece(piece, pieceIndex);
     newPiece.x = Math.round(
-      Math.random() * (this.rules.boardWidth.value - newPiece.width)
+      Math.random() * (this.rules.boardWidth - newPiece.width)
     );
     return newPiece;
   }
@@ -162,13 +164,13 @@ class Game extends EventEmitter {
     if (this.waitingConfirmationPlayer.find(player => player === user)) { return false; }
     //    if (this.spectator.find(spectator => spectator === user)) { return false; }
 
-    if (this.rules.needConfirmation.value) {
+    if (this.rules.needConfirmation) {
       this.waitingConfirmationPlayer.push(user);
     } else {
       this.confirmedPlayer.push(user);
     }
 
-    user.board = new Board(this.rules.boardWidth.value, this.rules.boardHeight.value);
+    user.board = new Board(this.rules.boardWidth, this.rules.boardHeight);
     user.room = this;
     user.socket.join(this.id);
     user.socket.emit('action', { type: 'ROOM_JOINTED', payload:

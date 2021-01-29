@@ -10,6 +10,7 @@ import io from 'socket.io'
 import Game from './game/game.js'
 import Player from './game/player.js'
 import default_rules from './game/default_rules.json'
+import ruleParser from './game/ruleParser.js'
 
 const socket_port = 3004;
 const server_port = 3005;
@@ -98,12 +99,15 @@ function getRoomInfo(room) {
       id: player.id,
       username: player.username,
     })),
+    rules: room.rules
   }
 }
 
 function getRoomList() {
   return ROOMS.map((room) => getRoomInfo(room));
 }
+
+let RULEPARSER = new ruleParser(default_rules);
 
 const reducer = (user, action) => { // RENAME INTO ROUTER !! ??
   switch (action.type) {
@@ -114,8 +118,8 @@ const reducer = (user, action) => { // RENAME INTO ROUTER !! ??
         console.log("YOU CANNOT BE ADMIN OF TWO ROOM");
         return;
       }
-      console.log(action.payload);
-      const room = new Game(default_rules, user, socketio)
+      
+      const room = new Game(RULEPARSER.check(action.payload), user, socketio)
       room.on('autodestruct', () => {
         console.log('WE ARE GOING TO AUTODESTRUCT');
         room.autodestruct();

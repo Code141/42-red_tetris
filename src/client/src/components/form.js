@@ -16,10 +16,6 @@ const Form = ({ message, setUserName }) => (
       change username
     </button>
 
-    <hr />
-
-    <hr />
-
   </div>
 )
 

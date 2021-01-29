@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 
 const Room = ({ room, jointRoom }) => (
   <div>
-    <hr />
     <div>
       {room.id}
       <br />
@@ -21,13 +20,11 @@ const Room = ({ room, jointRoom }) => (
 
 const RoomList = ({ rooms, getRoomList, jointRoom }) => (
   <div>
-    <hr />
 
     <button onClick={ () => getRoomList('PAYLOAD/filters?') } >
       GET ROOM LIST
     </button>
 
-    <hr />
 
     ROOMLIST
 

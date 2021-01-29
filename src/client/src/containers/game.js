@@ -74,14 +74,11 @@ const Game = ({ user, game, leaveRoom, startGame, move }) => {
       gameID: {game.id}
       <br />
       admin: {game.admin}
-      <hr />
       { game.admin === user.id &&
       <AdminPanel startGame={startGame} />
       }
 
-      <hr />
       gameHasStarted: {(game.gameHasStarted) ? 'TRUE' : 'FALSE'}
-      <hr />
       start in
       <br />
       tick: {game.tick}
@@ -93,7 +90,6 @@ const Game = ({ user, game, leaveRoom, startGame, move }) => {
       SPECTATORS :
       <br />
       { game.spectators.map((spectator) => (`${spectator.id}: ${spectator.username}`)) }
-      <hr />
 
       { myboard }
       <div className="boards">

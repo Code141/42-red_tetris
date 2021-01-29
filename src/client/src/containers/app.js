@@ -14,34 +14,28 @@ const App = () => {
     <div className='wrap'>
       <Router history={history}>
         <nav>
-          <ul>
-            <li>
-              <Link to='/'>
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link to='createRoom'>
-                CreateRoom 
-              </Link>
-            </li>
-            <li>
-              <Link to='/room'>
-                Game
-              </Link>
-            </li>
-          </ul>
+          <Link to='/'>
+            Home
+          </Link>
+          |
+          <Link to='createRoom'>
+            CreateRoom 
+          </Link>
+          |
+          <Link to='/room'>
+            Game
+          </Link>
         </nav>
 
-      <hr/>
+        <hr/>
 
-      <Route path='/createRoom' component={CreateRoom} />
-      <Route path='/room' component={Game} />
+        <Route path='/createRoom' component={CreateRoom} />
+        <Route path='/room' component={Game} />
 
-      <Route exact path='/'>
-        <Form />
-        <RoomList />
-      </Route>
+        <Route exact path='/'>
+          <Form />
+          <RoomList />
+        </Route>
 
       </Router>
     </div>

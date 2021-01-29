@@ -1,17 +1,21 @@
 import React from 'react'
 
-const Line = ({ cells, y }) => (
+const Line = ({ cells, y, colors }) => (
   <ul className='line'>
     {
       cells.map((cell, x) => (
-        <li className={`cell c${cell} ${cell ? 'block' : ''}`} key={x}>
+        <li
+          className={`cell c${cell} ${cell ? 'block' : ''}`}
+          key={x}
+          style={(cell !== 0 && cell !== 254 && cell !== 255) ? {backgroundColor: colors[cell]} : {}}
+        >
         </li>
       ))
     }
   </ul>
 )
 
-const Preview = ({ piece, size }) => {
+const Preview = ({ piece, size, colors }) => {
   let nextP = [];
   for (let y = 0; y < size; y++) {
     nextP[y] = [];
@@ -31,6 +35,7 @@ const Preview = ({ piece, size }) => {
             cells={line}
             key={index}
             y={index}
+            colors={colors}
           />
         )
       }
@@ -38,7 +43,7 @@ const Preview = ({ piece, size }) => {
   );
 }
 
-const StandardBoard = ({ board, piece, pieceBuffer }) => {
+const StandardBoard = ({ board, piece, pieceBuffer, colors }) => {
 
   const b2 = board.buffer.map((line, y) => line.map((cell, x) => {
     const relx = x - piece.x;
@@ -60,6 +65,7 @@ const StandardBoard = ({ board, piece, pieceBuffer }) => {
             cells={line}
             key={index}
             y={index}
+            colors={colors}
           />
         )
       }
@@ -69,7 +75,7 @@ const StandardBoard = ({ board, piece, pieceBuffer }) => {
 }
 
 
-const HorizontalBoard = ({ board, fillWith }) => {
+const HorizontalBoard = ({ board, fillWith, colors }) => {
 
   const b2 = [];
   let isLine = false;
@@ -100,6 +106,7 @@ const HorizontalBoard = ({ board, fillWith }) => {
             cells={line}
             key={index}
             y={index}
+            colors={colors}
           />
         )
       }
@@ -107,7 +114,7 @@ const HorizontalBoard = ({ board, fillWith }) => {
   );
 }
 
-const VerticalBoard = ({ board, fillWith }) => {
+const VerticalBoard = ({ board, fillWith, colors }) => {
   const b2 = [];
   for (let y = 0, l = board.height; y < l; y++) {
     if (!b2[y]) { b2[y] = []; }
@@ -131,6 +138,7 @@ const VerticalBoard = ({ board, fillWith }) => {
             cells={line}
             key={index}
             y={index}
+            colors={colors}
           />
         )
       }
@@ -142,21 +150,22 @@ const VerticalBoard = ({ board, fillWith }) => {
 
 const Board = ({ player, game, type }) => {
 
+  // TRY TO PUT THESES CONST ONE LEVEL COMPONENT UPPER
   const board = player.board;
   const piece = player.pieces[player.nbPiecesLanded];
   const pieceBuffer = game.rules.pieces.values[game.pieces[player.nbPiecesLanded].id];
-
   const nextPiece = game.rules.pieces.values[game.pieces[player.nbPiecesLanded + 1].id];
+  const colors = game.rules.pieces.pieceColors;
   let b;
 
-  if (type === "personal" || game.rules.fogOfWar.value === "all") {
-    b = ( <StandardBoard board={board} piece={piece} pieceBuffer={pieceBuffer} />);
+  if (type === "personal" || game.rules.fogOfWar === "all") {
+    b = ( <StandardBoard board={board} piece={piece} pieceBuffer={pieceBuffer} colors={colors} />);
   }
   else{
-    if (game.rules.fogOfWar.value === "horizontal") {
-      b = ( <HorizontalBoard board={board} fillWith="254" />);
+    if (game.rules.fogOfWar === "horizontal") {
+      b = ( <HorizontalBoard board={board} fillWith="254" colors={colors}/>);
     } else {
-      b = (<VerticalBoard board={board} fillWith="254" />);
+      b = (<VerticalBoard board={board} fillWith="254" colors={colors}/>);
     }
   }
 
@@ -165,7 +174,7 @@ const Board = ({ player, game, type }) => {
       {b}
 
       <div className="cartridge">
-        <Preview piece={nextPiece} size="4" />
+        <Preview piece={nextPiece} size="4" colors={colors} />
         <div className="username">
           {player.username}
         </div>

@@ -1,4 +1,9 @@
 {
+  "incrementalTick": {
+    "name": "Incremental tick",
+    "type": "bool",
+    "value" : false
+  },
   "tickDuration": {
     "name": "Tick duration",
     "suffix": "ms",
@@ -32,7 +37,7 @@
     "max" : 10
   },
   "needConfirmation": {
-    "name": "Player need admin confirmation",
+    "name": "Require Admin confirmation to joint",
     "type": "bool",
     "value" : false
   },
@@ -57,6 +62,16 @@
     "min" : 5,
     "max" : 20
   },
+  "fogOfWar": {
+    "name": "Fog of war",
+    "type": "radio",
+    "value": "vertical",
+    "values": [
+      "all",
+      "vertical",
+      "horizontal"
+    ]
+  },
   "actions": {
     "name": "Permited move",
     "type": "checkbox",
@@ -68,19 +83,10 @@
       "hardDrop"
     ]
   },
-  "fogOfWar": {
-    "name": "Fog of war",
-    "type": "radio",
-    "value": "all",
-    "values": [
-      "all",
-      "vertical",
-      "horizontal"
-    ]
-  },
   "pieces": {
+    "name": "Pieces",
     "type": "pieces",
-    "values": 
+    "values":
     [
       [
         [1, 1, 1],
@@ -113,19 +119,26 @@
         [5],
         [5],
         [5]
+      ],
+      [
+        [6, 0, 0, 6],
+        [6, 0, 0, 6],
+        [6, 0, 0, 6],
+        [6, 0, 0, 6]
       ]
+    ],
+    "pieceProbabilitySpawn":
+      [1, 1, 1, 1, 1, 1, 1, 10]
+    ,
+    "pieceColors": [
+      "#0000ff",
+      "#00ffff",
+      "#00ffff",
+      "#00ff00",
+      "#00ff00",
+      "#ffff00",
+      "#ff0000",
+      "#000000"
     ]
-  },
-  "pieceProbabilitySpawn": {
-    "values" : [1, 1, 1, 1, 1, 1, 1]
-  },
-  "pieceColors": [
-    [0, 0, 255],
-    [0, 255, 255],
-    [255, 0, 255],
-    [255, 0, 0],
-    [255, 0, 255],
-    [255, 255, 0],
-    [255, 255, 255]
-  ]
+  }
 }

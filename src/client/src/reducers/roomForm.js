@@ -1,17 +1,16 @@
 import {
-  SET_FORM
+  SET_FORM,
+  UPDATE_PIECE,
+  RESET_FORM
 } from '../actions/roomForm'
 
 import default_rules from '../game/default_rules.json'
 
-const roomForm = {
-};
-
 const reducer = (state = default_rules, action) => {
-  console.log(action);
+
+
   switch (action.type) {
     case SET_FORM:
-      console.log("ASEDGBLKHJ");
       return {
         ...state,
         [action.payload.key]: {
@@ -19,11 +18,31 @@ const reducer = (state = default_rules, action) => {
           value: action.payload.value
         }
       }
+    case UPDATE_PIECE:
+      let values = [...state['pieces'].values];
+      values[action.payload.index] = action.payload.buffer;
+      let pieceProbabilitySpawn = [...state['pieces'].pieceProbabilitySpawn];
+      pieceProbabilitySpawn[action.payload.index] = action.payload.proba;
+      let pieceColors = [...state['pieces'].pieceColors];
+      pieceColors[action.payload.index] = action.payload.color;
 
+      return {
+        ...state,
+        'pieces': {
+          ...state['pieces'],
+          values: values,
+          pieceProbabilitySpawn: pieceProbabilitySpawn,
+          pieceColors: pieceColors
+        }
+      }
+
+    case RESET_FORM:
+      return {
+        ...default_rules
+      }
     default:
       return state
   }
 }
 
 export default reducer
-
