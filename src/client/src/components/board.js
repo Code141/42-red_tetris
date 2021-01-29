@@ -7,7 +7,7 @@ const Line = ({ cells, y, colors }) => (
         <li
           className={`cell c${cell} ${cell ? 'block' : ''}`}
           key={x}
-          style={(cell !== 0 && cell !== 254 && cell !== 255) ? {backgroundColor: colors[cell]} : {}}
+          style={(cell !== 0 && cell !== 254 && cell !== 255) ? {backgroundColor: colors[cell - 1]} : {}}
         >
         </li>
       ))
