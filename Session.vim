@@ -29,12 +29,9 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 87 + 47) / 95)
-exe 'vert 1resize ' . ((&columns * 38 + 182) / 365)
-exe '2resize ' . ((&lines * 87 + 47) / 95)
-exe 'vert 2resize ' . ((&columns * 285 + 182) / 365)
-exe '3resize ' . ((&lines * 87 + 47) / 95)
-exe 'vert 3resize ' . ((&columns * 40 + 182) / 365)
+exe 'vert 1resize ' . ((&columns * 121 + 182) / 365)
+exe 'vert 2resize ' . ((&columns * 121 + 182) / 365)
+exe 'vert 3resize ' . ((&columns * 121 + 182) / 365)
 argglobal
 setlocal fdm=indent
 setlocal fde=0
@@ -44,11 +41,11 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 17 - ((15 * winheight(0) + 43) / 87)
+let s:l = 16 - ((15 * winheight(0) + 45) / 91)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-17
+16
 normal! 0
 lcd ~/cursus/red_tetris
 wincmd w
@@ -62,7 +59,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 7 - ((6 * winheight(0) + 43) / 87)
+let s:l = 7 - ((6 * winheight(0) + 45) / 91)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -80,7 +77,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 1 - ((0 * winheight(0) + 43) / 87)
+let s:l = 1 - ((0 * winheight(0) + 45) / 91)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -88,12 +85,9 @@ normal! zt
 normal! 0
 lcd ~/cursus/red_tetris
 wincmd w
-exe '1resize ' . ((&lines * 87 + 47) / 95)
-exe 'vert 1resize ' . ((&columns * 38 + 182) / 365)
-exe '2resize ' . ((&lines * 87 + 47) / 95)
-exe 'vert 2resize ' . ((&columns * 285 + 182) / 365)
-exe '3resize ' . ((&lines * 87 + 47) / 95)
-exe 'vert 3resize ' . ((&columns * 40 + 182) / 365)
+exe 'vert 1resize ' . ((&columns * 121 + 182) / 365)
+exe 'vert 2resize ' . ((&columns * 121 + 182) / 365)
+exe 'vert 3resize ' . ((&columns * 121 + 182) / 365)
 tabnext
 edit ~/cursus/red_tetris/src/server/index.mjs
 set splitbelow splitright
@@ -127,22 +121,21 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 87 + 47) / 95)
-exe 'vert 1resize ' . ((&columns * 30 + 182) / 365)
-exe '2resize ' . ((&lines * 29 + 47) / 95)
-exe 'vert 2resize ' . ((&columns * 27 + 182) / 365)
-exe '3resize ' . ((&lines * 27 + 47) / 95)
-exe 'vert 3resize ' . ((&columns * 27 + 182) / 365)
+exe 'vert 1resize ' . ((&columns * 84 + 182) / 365)
+exe '2resize ' . ((&lines * 30 + 47) / 95)
+exe 'vert 2resize ' . ((&columns * 93 + 182) / 365)
+exe '3resize ' . ((&lines * 30 + 47) / 95)
+exe 'vert 3resize ' . ((&columns * 93 + 182) / 365)
 exe '4resize ' . ((&lines * 29 + 47) / 95)
-exe 'vert 4resize ' . ((&columns * 27 + 182) / 365)
-exe '5resize ' . ((&lines * 43 + 47) / 95)
-exe 'vert 5resize ' . ((&columns * 276 + 182) / 365)
-exe '6resize ' . ((&lines * 43 + 47) / 95)
-exe 'vert 6resize ' . ((&columns * 276 + 182) / 365)
-exe '7resize ' . ((&lines * 43 + 47) / 95)
-exe 'vert 7resize ' . ((&columns * 29 + 182) / 365)
-exe '8resize ' . ((&lines * 43 + 47) / 95)
-exe 'vert 8resize ' . ((&columns * 29 + 182) / 365)
+exe 'vert 4resize ' . ((&columns * 93 + 182) / 365)
+exe '5resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 5resize ' . ((&columns * 93 + 182) / 365)
+exe '6resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 6resize ' . ((&columns * 93 + 182) / 365)
+exe '7resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 7resize ' . ((&columns * 92 + 182) / 365)
+exe '8resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 8resize ' . ((&columns * 92 + 182) / 365)
 argglobal
 setlocal fdm=indent
 setlocal fde=0
@@ -152,7 +145,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 109 - ((20 * winheight(0) + 43) / 87)
+let s:l = 109 - ((21 * winheight(0) + 45) / 91)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -170,7 +163,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 90 - ((23 * winheight(0) + 14) / 29)
+let s:l = 90 - ((24 * winheight(0) + 15) / 30)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -188,7 +181,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 107 - ((13 * winheight(0) + 13) / 27)
+let s:l = 107 - ((14 * winheight(0) + 15) / 30)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -224,12 +217,12 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 20 - ((18 * winheight(0) + 21) / 43)
+let s:l = 20 - ((19 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 20
-normal! 016|
+normal! 07|
 lcd ~/cursus/red_tetris
 wincmd w
 argglobal
@@ -242,12 +235,12 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 78 - ((4 * winheight(0) + 21) / 43)
+let s:l = 78 - ((4 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 78
-normal! 07|
+normal! 05|
 lcd ~/cursus/red_tetris
 wincmd w
 argglobal
@@ -260,16 +253,16 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 24 - ((0 * winheight(0) + 21) / 43)
+let s:l = 24 - ((23 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 24
-let s:c = 43 - ((12 * winwidth(0) + 14) / 29)
+let s:c = 2 - ((0 * winwidth(0) + 46) / 92)
 if s:c > 0
-  exe 'normal! ' . s:c . '|zs' . 43 . '|'
+  exe 'normal! ' . s:c . '|zs' . 2 . '|'
 else
-  normal! 043|
+  normal! 02|
 endif
 lcd ~/cursus/red_tetris
 wincmd w
@@ -283,7 +276,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 15 - ((7 * winheight(0) + 21) / 43)
+let s:l = 15 - ((7 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -291,22 +284,21 @@ normal! zt
 normal! 011|
 lcd ~/cursus/red_tetris
 wincmd w
-exe '1resize ' . ((&lines * 87 + 47) / 95)
-exe 'vert 1resize ' . ((&columns * 30 + 182) / 365)
-exe '2resize ' . ((&lines * 29 + 47) / 95)
-exe 'vert 2resize ' . ((&columns * 27 + 182) / 365)
-exe '3resize ' . ((&lines * 27 + 47) / 95)
-exe 'vert 3resize ' . ((&columns * 27 + 182) / 365)
+exe 'vert 1resize ' . ((&columns * 84 + 182) / 365)
+exe '2resize ' . ((&lines * 30 + 47) / 95)
+exe 'vert 2resize ' . ((&columns * 93 + 182) / 365)
+exe '3resize ' . ((&lines * 30 + 47) / 95)
+exe 'vert 3resize ' . ((&columns * 93 + 182) / 365)
 exe '4resize ' . ((&lines * 29 + 47) / 95)
-exe 'vert 4resize ' . ((&columns * 27 + 182) / 365)
-exe '5resize ' . ((&lines * 43 + 47) / 95)
-exe 'vert 5resize ' . ((&columns * 276 + 182) / 365)
-exe '6resize ' . ((&lines * 43 + 47) / 95)
-exe 'vert 6resize ' . ((&columns * 276 + 182) / 365)
-exe '7resize ' . ((&lines * 43 + 47) / 95)
-exe 'vert 7resize ' . ((&columns * 29 + 182) / 365)
-exe '8resize ' . ((&lines * 43 + 47) / 95)
-exe 'vert 8resize ' . ((&columns * 29 + 182) / 365)
+exe 'vert 4resize ' . ((&columns * 93 + 182) / 365)
+exe '5resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 5resize ' . ((&columns * 93 + 182) / 365)
+exe '6resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 6resize ' . ((&columns * 93 + 182) / 365)
+exe '7resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 7resize ' . ((&columns * 92 + 182) / 365)
+exe '8resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 8resize ' . ((&columns * 92 + 182) / 365)
 tabnext
 edit ~/cursus/red_tetris/src/client/src/index.js
 set splitbelow splitright
@@ -350,28 +342,28 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 21 + 47) / 95)
-exe 'vert 1resize ' . ((&columns * 30 + 182) / 365)
-exe '2resize ' . ((&lines * 21 + 47) / 95)
-exe 'vert 2resize ' . ((&columns * 30 + 182) / 365)
-exe '3resize ' . ((&lines * 25 + 47) / 95)
-exe 'vert 3resize ' . ((&columns * 30 + 182) / 365)
-exe '4resize ' . ((&lines * 21 + 47) / 95)
-exe 'vert 4resize ' . ((&columns * 30 + 182) / 365)
-exe '5resize ' . ((&lines * 55 + 47) / 95)
-exe 'vert 5resize ' . ((&columns * 27 + 182) / 365)
-exe '6resize ' . ((&lines * 6 + 47) / 95)
-exe 'vert 6resize ' . ((&columns * 27 + 182) / 365)
-exe '7resize ' . ((&lines * 28 + 47) / 95)
-exe 'vert 7resize ' . ((&columns * 27 + 182) / 365)
-exe '8resize ' . ((&lines * 47 + 47) / 95)
-exe 'vert 8resize ' . ((&columns * 276 + 182) / 365)
-exe '9resize ' . ((&lines * 43 + 47) / 95)
-exe 'vert 9resize ' . ((&columns * 276 + 182) / 365)
-exe '10resize ' . ((&lines * 47 + 47) / 95)
-exe 'vert 10resize ' . ((&columns * 29 + 182) / 365)
-exe '11resize ' . ((&lines * 43 + 47) / 95)
-exe 'vert 11resize ' . ((&columns * 29 + 182) / 365)
+exe '1resize ' . ((&lines * 22 + 47) / 95)
+exe 'vert 1resize ' . ((&columns * 84 + 182) / 365)
+exe '2resize ' . ((&lines * 22 + 47) / 95)
+exe 'vert 2resize ' . ((&columns * 84 + 182) / 365)
+exe '3resize ' . ((&lines * 22 + 47) / 95)
+exe 'vert 3resize ' . ((&columns * 84 + 182) / 365)
+exe '4resize ' . ((&lines * 22 + 47) / 95)
+exe 'vert 4resize ' . ((&columns * 84 + 182) / 365)
+exe '5resize ' . ((&lines * 30 + 47) / 95)
+exe 'vert 5resize ' . ((&columns * 93 + 182) / 365)
+exe '6resize ' . ((&lines * 30 + 47) / 95)
+exe 'vert 6resize ' . ((&columns * 93 + 182) / 365)
+exe '7resize ' . ((&lines * 29 + 47) / 95)
+exe 'vert 7resize ' . ((&columns * 93 + 182) / 365)
+exe '8resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 8resize ' . ((&columns * 93 + 182) / 365)
+exe '9resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 9resize ' . ((&columns * 93 + 182) / 365)
+exe '10resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 10resize ' . ((&columns * 92 + 182) / 365)
+exe '11resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 11resize ' . ((&columns * 92 + 182) / 365)
 argglobal
 setlocal fdm=indent
 setlocal fde=0
@@ -381,7 +373,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 5 - ((3 * winheight(0) + 10) / 21)
+let s:l = 5 - ((4 * winheight(0) + 11) / 22)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -399,7 +391,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 12 - ((8 * winheight(0) + 10) / 21)
+let s:l = 12 - ((8 * winheight(0) + 11) / 22)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -417,7 +409,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 1 - ((0 * winheight(0) + 12) / 25)
+let s:l = 1 - ((0 * winheight(0) + 11) / 22)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -435,7 +427,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 1 - ((0 * winheight(0) + 10) / 21)
+let s:l = 1 - ((0 * winheight(0) + 11) / 22)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -453,7 +445,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 2 - ((1 * winheight(0) + 27) / 55)
+let s:l = 2 - ((1 * winheight(0) + 15) / 30)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -471,17 +463,12 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 2 - ((1 * winheight(0) + 3) / 6)
+let s:l = 1 - ((0 * winheight(0) + 15) / 30)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-2
-let s:c = 38 - ((11 * winwidth(0) + 13) / 27)
-if s:c > 0
-  exe 'normal! ' . s:c . '|zs' . 38 . '|'
-else
-  normal! 038|
-endif
+1
+normal! 0
 lcd ~/cursus/red_tetris
 wincmd w
 argglobal
@@ -494,7 +481,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 2 - ((1 * winheight(0) + 14) / 28)
+let s:l = 2 - ((1 * winheight(0) + 14) / 29)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -512,7 +499,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 19 - ((18 * winheight(0) + 23) / 47)
+let s:l = 19 - ((18 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -530,7 +517,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 3 - ((2 * winheight(0) + 21) / 43)
+let s:l = 3 - ((2 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -548,7 +535,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 2 - ((1 * winheight(0) + 23) / 47)
+let s:l = 2 - ((1 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -566,7 +553,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 1 - ((0 * winheight(0) + 21) / 43)
+let s:l = 1 - ((0 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -574,28 +561,28 @@ normal! zt
 normal! 0
 lcd ~/cursus/red_tetris
 wincmd w
-exe '1resize ' . ((&lines * 21 + 47) / 95)
-exe 'vert 1resize ' . ((&columns * 30 + 182) / 365)
-exe '2resize ' . ((&lines * 21 + 47) / 95)
-exe 'vert 2resize ' . ((&columns * 30 + 182) / 365)
-exe '3resize ' . ((&lines * 25 + 47) / 95)
-exe 'vert 3resize ' . ((&columns * 30 + 182) / 365)
-exe '4resize ' . ((&lines * 21 + 47) / 95)
-exe 'vert 4resize ' . ((&columns * 30 + 182) / 365)
-exe '5resize ' . ((&lines * 55 + 47) / 95)
-exe 'vert 5resize ' . ((&columns * 27 + 182) / 365)
-exe '6resize ' . ((&lines * 6 + 47) / 95)
-exe 'vert 6resize ' . ((&columns * 27 + 182) / 365)
-exe '7resize ' . ((&lines * 28 + 47) / 95)
-exe 'vert 7resize ' . ((&columns * 27 + 182) / 365)
-exe '8resize ' . ((&lines * 47 + 47) / 95)
-exe 'vert 8resize ' . ((&columns * 276 + 182) / 365)
-exe '9resize ' . ((&lines * 43 + 47) / 95)
-exe 'vert 9resize ' . ((&columns * 276 + 182) / 365)
-exe '10resize ' . ((&lines * 47 + 47) / 95)
-exe 'vert 10resize ' . ((&columns * 29 + 182) / 365)
-exe '11resize ' . ((&lines * 43 + 47) / 95)
-exe 'vert 11resize ' . ((&columns * 29 + 182) / 365)
+exe '1resize ' . ((&lines * 22 + 47) / 95)
+exe 'vert 1resize ' . ((&columns * 84 + 182) / 365)
+exe '2resize ' . ((&lines * 22 + 47) / 95)
+exe 'vert 2resize ' . ((&columns * 84 + 182) / 365)
+exe '3resize ' . ((&lines * 22 + 47) / 95)
+exe 'vert 3resize ' . ((&columns * 84 + 182) / 365)
+exe '4resize ' . ((&lines * 22 + 47) / 95)
+exe 'vert 4resize ' . ((&columns * 84 + 182) / 365)
+exe '5resize ' . ((&lines * 30 + 47) / 95)
+exe 'vert 5resize ' . ((&columns * 93 + 182) / 365)
+exe '6resize ' . ((&lines * 30 + 47) / 95)
+exe 'vert 6resize ' . ((&columns * 93 + 182) / 365)
+exe '7resize ' . ((&lines * 29 + 47) / 95)
+exe 'vert 7resize ' . ((&columns * 93 + 182) / 365)
+exe '8resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 8resize ' . ((&columns * 93 + 182) / 365)
+exe '9resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 9resize ' . ((&columns * 93 + 182) / 365)
+exe '10resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 10resize ' . ((&columns * 92 + 182) / 365)
+exe '11resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 11resize ' . ((&columns * 92 + 182) / 365)
 tabnext
 edit ~/cursus/red_tetris/src/client/src/containers/app.js
 set splitbelow splitright
@@ -633,23 +620,23 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 43 + 47) / 95)
-exe 'vert 1resize ' . ((&columns * 84 + 182) / 365)
-exe '2resize ' . ((&lines * 47 + 47) / 95)
-exe 'vert 2resize ' . ((&columns * 84 + 182) / 365)
-exe '3resize ' . ((&lines * 43 + 47) / 95)
-exe 'vert 3resize ' . ((&columns * 84 + 182) / 365)
-exe '4resize ' . ((&lines * 47 + 47) / 95)
-exe 'vert 4resize ' . ((&columns * 84 + 182) / 365)
-exe '5resize ' . ((&lines * 10 + 47) / 95)
-exe 'vert 5resize ' . ((&columns * 84 + 182) / 365)
-exe '6resize ' . ((&lines * 80 + 47) / 95)
-exe 'vert 6resize ' . ((&columns * 84 + 182) / 365)
-exe 'vert 7resize ' . ((&columns * 25 + 182) / 365)
-exe '8resize ' . ((&lines * 10 + 47) / 95)
-exe 'vert 8resize ' . ((&columns * 84 + 182) / 365)
-exe '9resize ' . ((&lines * 80 + 47) / 95)
-exe 'vert 9resize ' . ((&columns * 84 + 182) / 365)
+exe '1resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 1resize ' . ((&columns * 69 + 182) / 365)
+exe '2resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 2resize ' . ((&columns * 69 + 182) / 365)
+exe '3resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 3resize ' . ((&columns * 69 + 182) / 365)
+exe '4resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 4resize ' . ((&columns * 69 + 182) / 365)
+exe '5resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 5resize ' . ((&columns * 70 + 182) / 365)
+exe '6resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 6resize ' . ((&columns * 70 + 182) / 365)
+exe 'vert 7resize ' . ((&columns * 84 + 182) / 365)
+exe '8resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 8resize ' . ((&columns * 69 + 182) / 365)
+exe '9resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 9resize ' . ((&columns * 69 + 182) / 365)
 argglobal
 setlocal fdm=indent
 setlocal fde=0
@@ -659,7 +646,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 33 - ((19 * winheight(0) + 21) / 43)
+let s:l = 33 - ((20 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -677,7 +664,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 13 - ((12 * winheight(0) + 23) / 47)
+let s:l = 13 - ((12 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -695,7 +682,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 50 - ((35 * winheight(0) + 21) / 43)
+let s:l = 50 - ((37 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -713,7 +700,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 9 - ((4 * winheight(0) + 23) / 47)
+let s:l = 9 - ((4 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -731,7 +718,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 1 - ((0 * winheight(0) + 5) / 10)
+let s:l = 1 - ((0 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -749,7 +736,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 94 - ((4 * winheight(0) + 40) / 80)
+let s:l = 94 - ((4 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -785,7 +772,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 18 - ((4 * winheight(0) + 5) / 10)
+let s:l = 18 - ((17 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -803,7 +790,7 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 128 - ((71 * winheight(0) + 40) / 80)
+let s:l = 128 - ((40 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -811,24 +798,24 @@ normal! zt
 normal! 07|
 lcd ~/cursus/red_tetris
 wincmd w
-6wincmd w
-exe '1resize ' . ((&lines * 43 + 47) / 95)
-exe 'vert 1resize ' . ((&columns * 84 + 182) / 365)
-exe '2resize ' . ((&lines * 47 + 47) / 95)
-exe 'vert 2resize ' . ((&columns * 84 + 182) / 365)
-exe '3resize ' . ((&lines * 43 + 47) / 95)
-exe 'vert 3resize ' . ((&columns * 84 + 182) / 365)
-exe '4resize ' . ((&lines * 47 + 47) / 95)
-exe 'vert 4resize ' . ((&columns * 84 + 182) / 365)
-exe '5resize ' . ((&lines * 10 + 47) / 95)
-exe 'vert 5resize ' . ((&columns * 84 + 182) / 365)
-exe '6resize ' . ((&lines * 80 + 47) / 95)
-exe 'vert 6resize ' . ((&columns * 84 + 182) / 365)
-exe 'vert 7resize ' . ((&columns * 25 + 182) / 365)
-exe '8resize ' . ((&lines * 10 + 47) / 95)
-exe 'vert 8resize ' . ((&columns * 84 + 182) / 365)
-exe '9resize ' . ((&lines * 80 + 47) / 95)
-exe 'vert 9resize ' . ((&columns * 84 + 182) / 365)
+7wincmd w
+exe '1resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 1resize ' . ((&columns * 69 + 182) / 365)
+exe '2resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 2resize ' . ((&columns * 69 + 182) / 365)
+exe '3resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 3resize ' . ((&columns * 69 + 182) / 365)
+exe '4resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 4resize ' . ((&columns * 69 + 182) / 365)
+exe '5resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 5resize ' . ((&columns * 70 + 182) / 365)
+exe '6resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 6resize ' . ((&columns * 70 + 182) / 365)
+exe 'vert 7resize ' . ((&columns * 84 + 182) / 365)
+exe '8resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 8resize ' . ((&columns * 69 + 182) / 365)
+exe '9resize ' . ((&lines * 45 + 47) / 95)
+exe 'vert 9resize ' . ((&columns * 69 + 182) / 365)
 tabnext 4
 badd +1 ~/cursus/red_tetris/src/server/package.json
 badd +1 ~/cursus/red_tetris/src/server/index.mjs
@@ -857,7 +844,7 @@ badd +1 ~/cursus/red_tetris/src/client/src/hooks/keyboard.js
 badd +1 ~/cursus/red_tetris/src/client/src/containers/game.js
 badd +1 ~/cursus/red_tetris/src/client/src/components/board.js
 badd +1 ~/cursus/red_tetris/src/client/src/components/form.js
-badd +1 ~/cursus/red_tetris/src/client/src/components/createRoom.js
+badd +0 ~/cursus/red_tetris/src/client/src/components/createRoom.js
 badd +1 ~/cursus/red_tetris/src/client/src/components/roomList.js
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf

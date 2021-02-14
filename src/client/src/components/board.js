@@ -153,8 +153,8 @@ const Board = ({ player, game, type }) => {
   // TRY TO PUT THESES CONST ONE LEVEL COMPONENT UPPER
   const board = player.board;
   const piece = player.pieces[player.nbPiecesLanded];
-  const pieceBuffer = game.rules.pieces.values[game.pieces[player.nbPiecesLanded].id];
-  const nextPiece = game.rules.pieces.values[game.pieces[player.nbPiecesLanded + 1].id];
+  const pieceBuffer = game.rules.pieces.values[game.pieces[player.nbPiecesLanded].id].buffers[piece.rotation];
+  const nextPiece = game.rules.pieces.values[game.pieces[player.nbPiecesLanded + 1].id].buffers[0];
   const colors = game.rules.pieces.pieceColors;
   let b;
 

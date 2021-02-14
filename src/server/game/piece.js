@@ -1,16 +1,14 @@
 class Piece {
-  constructor(piece, id) {
+  constructor(piece, id, position) {
     this.id = id;
-    this.x = 0;
+    this.x = position;
     this.y = 0;
     this.rotation = 0;
 
-    this.height = piece.length;
-    this.width = 0;
-    for (let y = 0, l = piece.length; y < l; y++) {
-      if (this.width < piece[y].length) { this.width = piece[y].length; }
-    }
-    this.buffer = piece;
+    this.height = piece.height;
+    this.width = piece.width;
+    this.buffer = piece.buffers;
+    //this.buffer = this.generateBuffers(piece);
   }
 
   info() {
@@ -23,18 +21,23 @@ class Piece {
   }
 
   rotateClockwise() {
-    this.rotation = this.rotation + (this.rotation + 1) % 4;
+    [this.width, this.height] = [this.height, this.width];
+    this.rotation = (this.rotation < 3) ? this.rotation + 1 : 0;
+    return 2;
   }
 
   rotateAntiClockwise() {
-    this.rotation = this.rotation + (this.rotation - 1) % 4;
+    [this.width, this.height] = [this.height, this.width];
+    this.rotation = (this.rotation > 0) ? this.rotation - 1 : 3;
   }
 
   mirrorH() {
   }
 
   mirrorV() {
+
   }
+
 }
 
 export default Piece;

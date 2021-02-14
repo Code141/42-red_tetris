@@ -49,12 +49,11 @@ class Board {
   }
 
   mergePiece(piece) {
-    const pieceBuffer = piece.buffer;
+    const pieceBuffer = piece.buffer[piece.rotation];
     const l = piece.height;
     const ll = piece.width;
     let y = 0;
     let x = 0;
-
     while (y < l) {
       while (x < ll) {
         if (pieceBuffer[y][x] !== 0) {

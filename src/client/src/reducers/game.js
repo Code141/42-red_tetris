@@ -6,6 +6,7 @@ import {
   NEXT_TICK,
   NEXT_PIECE,
   LOOSE,
+  ROTATE,
   STRAFE_LEFT,
   STRAFE_RIGHT,
   ADMIN_ID,
@@ -109,8 +110,8 @@ const reducer = (state = game, action) => {
           let nextStatePlayer = { ...player };
 
           if (nextStatePlayer.landed) {
-            const buffer = state.rules.pieces.values[state.pieces[player.nbPiecesLanded].id];
             const piece = player.pieces[player.nbPiecesLanded];
+            const buffer = state.rules.pieces.values[state.pieces[player.nbPiecesLanded].id].buffers[piece.rotation];
             nextStatePlayer.landed = false;
             nextStatePlayer.nbPiecesLanded += 1;
             nextStatePlayer.board = {
@@ -192,6 +193,24 @@ const reducer = (state = game, action) => {
           : { ...player, landed: true }
         )
       }
+    case ROTATE:
+      id_player = action.payload.id_player;
+      return {
+        ...state,
+        players: state.players.map((player, id) => {
+          if (id !== id_player) { return { ...player } }
+          return {
+            ...player,
+            pieces: player.pieces.map((piece, indexPiece) => {
+              if (indexPiece !== player.nbPiecesLanded) { return { ...piece } }
+              return {
+                ...piece,
+                rotation: (piece.rotation + 1 ) % 4,
+              }
+            }),
+          }
+        }),
+      };
 
     case STRAFE_LEFT:
       id_player = action.payload.id_player;

@@ -31,6 +31,7 @@ const Game = ({ user, game, leaveRoom, startGame, move }) => {
 
   useKeyboardEvent('ArrowLeft', () => { move('STRAFE_LEFT') });
   useKeyboardEvent('ArrowRight', () => { move('STRAFE_RIGHT') });
+  useKeyboardEvent('ArrowUp', () => { move('ROTATE') });
 
   let myboard = '';
   let boards = '';

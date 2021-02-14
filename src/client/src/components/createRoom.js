@@ -93,7 +93,7 @@ const PiecesInput = ({ values, pieceProbabilitySpawn, pieceColors, name, cb }) =
 
   const printForm = values.map((element, index) => {
     return (
-      <div>
+      <div className="piece">
         <Preview piece={element} color={pieceColors[index]} size="4"/>
         {pieceProbabilitySpawn[index]}
         <input
@@ -115,7 +115,7 @@ const PiecesInput = ({ values, pieceProbabilitySpawn, pieceColors, name, cb }) =
   return ( printForm )
 }
 
-const CreateRoom = ({ roomForm, createRoom, setRoomOptions, updatePiece, resetForm }) => {
+const CreateRoom = ({ roomForm, createRoom, setRoomOptions, resetForm }) => {
 
   const printForm = Object.keys(roomForm).map(key => {
     let cb = (value) => { setRoomOptions({key:key, value:value}); }
@@ -132,7 +132,7 @@ const CreateRoom = ({ roomForm, createRoom, setRoomOptions, updatePiece, resetFo
       input = <RadioInput {...roomForm[key]} cb={cb} />;
 
     } else if (roomForm[key].type === "pieces") {
-      input = <PiecesInput {...roomForm[key]} cb={updatePiece} />;
+      input = <PiecesInput {...roomForm[key]} cb={cb} />;
 
     } else {
       input = (<div style={{color: 'red'}}>{key}{item.name}</div>)
@@ -219,18 +219,6 @@ function createRoomAction(options) {
 
 // EDIT PIECE COLOR / PROBA / DELETE
 
-function updatePieceAction(options) {
-  return {
-    type: 'UPDATE_PIECE',
-    payload: {
-      index: options.index,
-      buffer: options.buffer,
-      proba: options.proba,
-      color: options.color,
-    },
-  }
-}
-
 // CREATE NEW PIECE
 
 function setRoomOptionsAction(options) {
@@ -256,8 +244,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch, payload) => ({
   createRoom: (options) => dispatch(createRoomAction(options)),
   setRoomOptions: (options) => dispatch(setRoomOptionsAction(options)),
-  resetForm: () => dispatch(resetFormAction()),
-  updatePiece: (options) => dispatch(updatePieceAction(options))
+  resetForm: () => dispatch(resetFormAction())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateRoom);

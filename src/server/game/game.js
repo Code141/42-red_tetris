@@ -94,31 +94,34 @@ class Game extends EventEmitter {
     // (emit to top level => free me)
   }
 
-  generateNewPiece() {
-    let acc = 0;
-    let pieceIndex = 0;
+
+  getProbabilityPieceIndex() {
     let pieceProbabilitySpawn = this.rules.pieces.pieceProbabilitySpawn;
     const position = Math.random() * pieceProbabilitySpawn.reduce((sum, x) => sum + x);
 
+    let acc = 0;
+    let pieceIndex = 0;
     pieceProbabilitySpawn.some((value, index) => {
       acc = acc + value;
       pieceIndex = index;
       return position < acc
     })
-
-    const piece = this.rules.pieces.values[pieceIndex];
-    console.log(piece);
-    let newPiece = new Piece(piece, pieceIndex);
-    newPiece.x = Math.round(
-      Math.random() * (this.rules.boardWidth - newPiece.width)
-    );
-    return newPiece;
+    return pieceIndex;
   }
 
-  servePiece(newPiece = this.generateNewPiece()) {
+
+
+  servePiece() {
+    let pieceIndex = this.getProbabilityPieceIndex();
+    const piece = this.rules.pieces.values[pieceIndex];
+    let position = Math.round( Math.random() * (this.rules.boardWidth - piece.width));
+
+    let newPiece = new Piece(piece, pieceIndex, position);
+
     this.pieces.push(newPiece);
+
     this.players.forEach((player) => {
-      player.pieces.push({ ...newPiece });
+      player.pieces.push(new Piece(piece, pieceIndex, position));
     });
 
     this.broadcast({ type: 'NEXT_PIECE', payload: newPiece.info() });

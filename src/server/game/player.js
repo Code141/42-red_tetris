@@ -1,6 +1,6 @@
 import crypto from 'crypto'
 import EventEmitter from 'events'
-import { moveDown, strafeLeft, strafeRight, checkCollision } from './rules.js'
+import { moveDown, strafeLeft, strafeRight, checkCollision, rotate } from './rules.js'
 
 class Player extends EventEmitter {
   constructor(socket, username) {
@@ -21,12 +21,17 @@ class Player extends EventEmitter {
     this.board = undefined;
     this.status = undefined;
 
-
-
-
     this.socket.on('move', (action) => {
       if (!this.room || !this.room.gameHasStarted || this.status !== "playing")
         return;
+
+      if (action.payload === 'ROTATE' &&
+        rotate(this.board, this.pieces[this.nbPiecesLanded])) {
+        this.room.broadcast({ type: 'ROTATE', payload: {
+          id_player: this.id_player,
+        },
+        });
+      }
 
       if (action.payload === 'STRAFE_LEFT' &&
         strafeLeft(this.board, this.pieces[this.nbPiecesLanded])) {

@@ -156,6 +156,10 @@ label {
 .inputForm div{
 }
 
+.inputForm div.piece{
+  float: left;
+}
+
 input {
   width: 50px;
   border: none;
